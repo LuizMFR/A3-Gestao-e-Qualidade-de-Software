@@ -18,15 +18,21 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("view/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }
+    @Override
+    public void stop() throws Exception {
+        if (springContext != null) {
+            springContext.close(); // Finaliza o Spring Boot
+        }
+        super.stop(); // chama o método original do JavaFX
+    }
 
     public static void main(String[] args) {
         launch();
     }
-    
 }

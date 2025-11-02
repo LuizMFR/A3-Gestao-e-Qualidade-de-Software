@@ -73,16 +73,22 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-            <!-- JavaFX -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>org.example.cliente.HelloApplication</mainClass>
+                    <options>
+                        <option>--module-path</option>
+                        <option>C:\javafx-sdk-25.0.1\lib</option> <!-- caminho correto do seu JavaFX SDK -->
+                        <option>--add-modules</option>
+                        <option>javafx.controls,javafx.fxml</option>
+                    </options>
                 </configuration>
             </plugin>
+
+
 
         </plugins>
     </build>

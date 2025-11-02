@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -37,24 +38,36 @@ public class UserControler{
 
 
     @GetMapping()
-    public List<User> getUsers(){
+    private List<User> getUsers(){
         return userService.getAllUsers();
     }
 
+    private User getUserById(Integer id){
+        return userService.getUserById(id);
+    }
+
     @GetMapping("/{id}")
-    public boolean getUserById(@PathVariable Integer id){
+    public boolean userIdExists(@PathVariable Integer id){
         return userService.existsById(id);
     }
 
     @PostMapping()
     public ResponseEntity<User> createUser(@RequestBody User user){
+        
+        if(userService.createUser(user) == null){
+           ResponseEntity.badRequest().build(); 
+        }
 
-        return null;
+        return ResponseEntity.ok().body(user);
     }
 
     @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable Integer id, @RequestBody User userDetails){
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User newUserData){
        
-        return null;
+        if (userService.updateUser(id, newUserData) == null){
+            ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build(newUserData);
     }
 }

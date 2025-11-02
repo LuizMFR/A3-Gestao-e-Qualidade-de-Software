@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+
 import com.example.Servidor.entities.User;
 import com.example.Servidor.repositories.UserRepository;
 
@@ -25,6 +26,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserById(Integer id){
+        return userRepository.findById(id).get();
+    }
+
     public boolean existsById(Integer id) {
         return userRepository.existsById(id);
     }
@@ -37,14 +42,25 @@ public class UserService {
         return userRepository.findByEmailAndSenha(email, senha);
     }
 
-    public User createUser(User user) {
-        if (user == null) {
-            return null;
+    public User createUser(User user){
 
+        if (this.existsByEmail(user.getEmail())){
+            return null;
         }
         
         return userRepository.save(user);
     }
 
+    public User updateUser(Integer id, User newUserData){
+
+        if (this.existsByEmail(newUserData.getEmail())){
+            return null;
+        }
+
+        User newUser = newUserData;
+        newUser.setId(id);
+
+        userRepository.save(newUser);
+    }
 
 }

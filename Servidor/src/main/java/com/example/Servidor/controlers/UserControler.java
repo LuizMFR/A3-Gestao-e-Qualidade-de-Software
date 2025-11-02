@@ -1,64 +1,60 @@
 package com.example.Servidor.controlers;
 
-import com.example.Servidor.repositories.UserRepository;
 import com.example.Servidor.entities.User;
+import com.example.Servidor.services.UserService;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import java.net.URI;
 
+/*CAMADA QUE RECEBE LIDA COM AS REQUISIÇÕES, VAI RECEBER AS REQUISIÇÕES, CHAMAR O SERVICE 
+ * E COM BASE NA RESPOSTA DO SERVICE RETORNAR ALGO OU UM STATUS CODE DE ERRO
+ */
 
 @RestController
 @RequestMapping("/usuarios")
 public class UserControler{
-
+    
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-
-    @GetMapping
-    public List<User> listarUsuarios(){
-        return userRepository.findAll();
+    public UserControler(){
+        
     }
 
-    @PostMapping
-    public ResponseEntity<User> criarUsuario(@RequestBody User user){
-        User savedUser = userRepository.save(user);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedUser.getId())
-                .toUri();
-        return ResponseEntity.created(location).body(savedUser);
+    @GetMapping("/health")
+    public ResponseEntity<Object> HealthCheck() {
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> atualizarUsuario(@PathVariable Integer id, @RequestBody User dados) {
-        return userRepository.findById(id)
-                .map(user -> {
-                    user.setNome(dados.getNome());
-                    user.setSobrenome(dados.getSobrenome());
-                    user.setEmail(dados.getEmail());
-                    user.setSenha(dados.getSenha());
-                    user.setProfissao(dados.getProfissao());
-                    user.setNascimento(dados.getNascimento());
 
-                    User updatedUser = userRepository.save(user);
-                    return ResponseEntity.ok(updatedUser);
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+
+    @GetMapping()
+    public List<User> getUsers(){
+        return userService.getAllUsers();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable Integer id){
-        if (!userRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
-        }
-        userRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-            }
+    @GetMapping("/{id}")
+    public boolean getUserById(@PathVariable Integer id){
+        return userService.existsById(id);
     }
 
+    @PostMapping()
+    public ResponseEntity<User> createUser(@RequestBody User user){
+
+        return null;
+    }
+
+    @PutMapping("/update/{id}")
+    public User updateUser(@PathVariable Integer id, @RequestBody User userDetails){
+       
+        return null;
+    }
+}

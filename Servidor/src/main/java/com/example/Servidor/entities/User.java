@@ -21,6 +21,25 @@ public class User {
     private String profissao;
     private String nascimento;
 
+    public User() {
+    }
+
+    public User(
+            String nome, 
+            String sobrenome,
+            String email, 
+            String senha, 
+            String profissao, 
+            String nascimento) {
+                
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.senha = senha;
+        this.profissao = profissao;
+        this.nascimento = nascimento;
+    }
+
     public Integer getId() {
         return id;
     }

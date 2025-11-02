@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+/*CAMADA QUE RECEBE LIDA COM AS REQUISIÇÕES, VAI RECEBER AS REQUISIÇÕES, CHAMAR O SERVICE 
+ * E COM BASE NA RESPOSTA DO SERVICE RETORNAR ALGO OU UM STATUS CODE DE ERRO
+ */
 
 @RestController
 @RequestMapping("/usuarios")

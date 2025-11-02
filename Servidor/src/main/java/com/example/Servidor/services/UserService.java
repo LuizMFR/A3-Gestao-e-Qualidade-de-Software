@@ -6,6 +6,12 @@ import java.util.List;
 import com.example.Servidor.entities.User;
 import com.example.Servidor.repositories.UserRepository;
 
+/* SERVICE É A CAMADA INTERMEDIÁRIA QUE FAZ AS VERIFICAÇÕES DOS INPUTS
+ * DO CONTROLER E ACIONA OS COMANDOS DO REPOSITÓRIO
+ * 
+ * A LÓGICA ESTÁ AQUI
+ */
+
 @Service
 public class UserService {
     

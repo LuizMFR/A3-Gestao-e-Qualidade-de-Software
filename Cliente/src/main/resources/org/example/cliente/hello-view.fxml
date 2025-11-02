@@ -14,4 +14,5 @@
    <TextField alignment="TOP_LEFT" promptText="Senha" />
 
   <Label fx:id="welcomeText" />
+  
 </VBox>

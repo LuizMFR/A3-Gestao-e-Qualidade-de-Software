@@ -39,6 +39,9 @@ public class User {
         this.profissao = profissao;
         this.nascimento = nascimento;
     }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;

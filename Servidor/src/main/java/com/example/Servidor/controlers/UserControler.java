@@ -68,6 +68,6 @@ public class UserControler{
             ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok().build(newUserData);
+        return ResponseEntity.ok().body(newUserData);
     }
 }

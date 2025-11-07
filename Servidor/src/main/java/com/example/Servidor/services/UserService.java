@@ -60,7 +60,7 @@ public class UserService {
         User newUser = newUserData;
         newUser.setId(id);
 
-        userRepository.save(newUser);
+        return userRepository.save(newUser);
     }
 
 }

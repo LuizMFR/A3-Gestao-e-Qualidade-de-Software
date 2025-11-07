@@ -1,12 +1,13 @@
 package org.example.cliente.repository;
 
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class UserRepository {
 
     
-    public void validarCredenciais(String email, String senha) {
-        
+    public boolean validarCredenciais(String email, String senha) {
+        return true;   
     }
     
 }

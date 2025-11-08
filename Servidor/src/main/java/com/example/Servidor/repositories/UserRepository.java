@@ -9,7 +9,7 @@ import com.example.Servidor.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>{
 
-    boolean findByEmailAndSenha(String email, String senha);
+    boolean existsByEmailAndSenha(String email, String senha);
     
-    boolean findByEmail(String email);
+    boolean existsByEmail(String email);
 }

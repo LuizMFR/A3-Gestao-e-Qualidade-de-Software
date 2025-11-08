@@ -35,11 +35,11 @@ public class UserService {
     }
 
     public boolean existsByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.existsByEmail(email);
     }
 
     public boolean authenticated(String email, String senha) {
-        return userRepository.findByEmailAndSenha(email, senha);
+        return userRepository.existsByEmailAndSenha(email, senha);
     }
 
     public User createUser(User user){
@@ -61,6 +61,10 @@ public class UserService {
         newUser.setId(id);
 
         return userRepository.save(newUser);
+    }
+
+    public void deleteUser(Integer id){
+        userRepository.deleteById(id);
     }
 
 }

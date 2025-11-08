@@ -69,6 +69,7 @@ public class User {
     public void setNascimento(Date nascimento){
         this.nascimento = nascimento;
     }
+    
 }
 
 

@@ -1,0 +1,60 @@
+/* login.css */
+
+.root {
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+    -fx-background-color: linear-gradient(to bottom, #f5f7fb, #e9eef7);
+}
+
+.container {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 16, 0, 0, 6);
+    -fx-max-width: 360;
+    -fx-pref-width: 420;
+    -fx-max-width: 420;
+;
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+}
+
+.text-field, .password-field {
+    -fx-background-radius: 8;
+    -fx-padding: 10 12 10 12;
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: transparent;
+}
+
+.button {
+    -fx-background-radius: 10;
+    -fx-padding: 10 16 10 16;
+    -fx-font-weight: bold;
+}
+.button:default {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+}
+.button:hover {
+    -fx-opacity: 0.95;
+}
+
+.error {
+    -fx-text-fill: #d32f2f;
+    -fx-font-size: 12px;
+}
+.success {
+    -fx-text-fill: #2e7d32; /* verde */
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+.date-picker {
+    -fx-background-radius: 8;
+    -fx-background-color: #f3f4f6;
+}

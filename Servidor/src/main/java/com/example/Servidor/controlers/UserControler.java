@@ -4,6 +4,7 @@ import com.example.Servidor.entities.User;
 import com.example.Servidor.services.UserService;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -26,13 +26,8 @@ public class UserControler{
     @Autowired
     private UserService userService;
 
-    public UserControler(){
+        public UserControler(){
         
-    }
-
-    @GetMapping("/health")
-    public ResponseEntity<Object> HealthCheck() {
-        return ResponseEntity.ok().build();
     }
 
 
@@ -55,19 +50,33 @@ public class UserControler{
     public ResponseEntity<User> createUser(@RequestBody User user){
         
         if(userService.createUser(user) == null){
-           ResponseEntity.badRequest().build(); 
+           return ResponseEntity.badRequest().build(); 
         }
 
         return ResponseEntity.ok().body(user);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User newUserData){
        
         if (userService.updateUser(id, newUserData) == null){
-            ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.ok().body(newUserData);
+    }
+ 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id){
+        if (!userService.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
+        userService.deleteUser(id);
+        if(!userService.existsById(id)){
+            return ResponseEntity.noContent().build();
+            }
+        
+        return ResponseEntity.internalServerError().build();
     }
 }

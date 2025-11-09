@@ -1,6 +1,7 @@
 package org.example.cliente.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
 
@@ -22,6 +23,10 @@ public class User {
         this.profissao = profissao;
         this.nascimento = nascimento;
     }   
+
+    //Um usuario pode ter varias receitas e custos
+    private List<Transacao> transacoes;//Criando a Transacao 
+   
 
     //Iniciando os Getters e Setters
     public int getId(){
@@ -69,7 +74,18 @@ public class User {
     public void setNascimento(Date nascimento){
         this.nascimento = nascimento;
     }
-    
+
+    //Metodos para Transacao
+    public List<Transacao> getTransacoes(){
+        return transacoes;
+    }
+     public void adicionarTransacao(Transacao transacao) {
+        this.transacoes.add(transacao);
+    }
+
+    public void removerTransacao(Transacao transacao) {
+        this.transacoes.remove(transacao);
+    }  
 }
 
 

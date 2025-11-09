@@ -2,27 +2,29 @@ package org.example.cliente.entities;
 
 import java.util.Date;
 
-public class Receita {
+public class Transacao {
     
-    private int id;
+    private int id;//ID do usuario
     private int usuarioId;
     private int categoriaId;
     private String descricao;
-    private Date dataReceita;
+    private Date dataTransacao;
     private float valor;
+    private String tipo;
 
     //Construtor vazio (necessário para frameworks e JavaFX)
-    public Receita(){
+    public Transacao(){
     }
 
     //Iniciando o contrutor completo
-    public Receita (int id, int usuarioId, int categoriaId, String descricao, Date dataReceita, float valor){
+    public Transacao(int usuarioId, int categoriaId, String descricao, Date dataTransacao, float valor, String tipo){
 
         this.usuarioId = usuarioId;
         this.categoriaId = categoriaId;
         this.descricao = descricao;
-        this.dataReceita = dataReceita;
+        this.dataTransacao= dataTransacao;
         this.valor = valor;
+        this.tipo = tipo;
     }
 
     //Iniciando os Getters e Setters
@@ -36,34 +38,41 @@ public class Receita {
     public void setUsuarioId(int usuarioId){
         this.usuarioId = usuarioId;
     }
+
      public int getCategoriaId() {
         return categoriaId;
     }
-     ////////////////////////////
     public void setCategoriaId(int categoriaId) {
         this.categoriaId = categoriaId;
     }
+
     public String getDescricao() {
         return descricao;
     }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-     ////////////////////////////
-    public Date getDataReceita() {
-        return dataReceita;
+    
+    public Date getDataTransacao() {
+        return dataTransacao;
     }
-    public void setDataReceita(Date dataReceita) {
-        this.dataReceita = dataReceita;
+    public void setDataTransacao(Date dataTransacao) {
+        this.dataTransacao = dataTransacao;
     }
-     ////////////////////////////
+    
     public float getValor() {
         return valor;
     }
     public void setValor(float valor) {
         this.valor = valor;
     }
-    
+
+    public String getTipo(){
+        return tipo;
+    }
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
 }
 
 

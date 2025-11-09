@@ -3,6 +3,7 @@ package org.example.cliente.controllers;
 import java.io.IOException;
 
 import org.example.cliente.repository.UserRepository;
+import org.example.cliente.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,11 +21,8 @@ public class LogarController {
     @FXML private Label lblMensagem;       // feedback
     @FXML private Button btnEntrar;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
-    public LogarController() {
-        System.out.println("🔥 LogarController criado!");
-    }
 
     @FXML
     private void initialize() {
@@ -61,15 +59,16 @@ public class LogarController {
 
     private void validarCredenciais(String usuario, String senha) throws IOException {
         // Fecha a aplicação ou limpa os campos
-        if (userRepository.validarCredenciais(usuario, senha)) {
+        if (userService.validarCredenciais(usuario, senha)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/home.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Home");
             stage.setScene(new Scene(root));
             stage.show();
-            Stage loginStage = (Stage) root.getScene().getWindow();
+            Stage loginStage = (Stage) txtSenha.getScene().getWindow();
             loginStage.close();
+
             
         } else {
             lblMensagem.setText("Usuário ou senha inválidos.");

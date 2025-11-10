@@ -1,6 +1,9 @@
 package com.example.Servidor.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,8 +25,23 @@ public class UserService {
     public UserService() {
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+
+    public List<List<String>> getAllUsers(){
+        
+        List<List<String>> retorno = new ArrayList<>();
+
+        for (User user : userRepository.findAll()) {
+            List<String> user_list = Arrays.asList(
+                user.getNome(),
+                user.getSobrenome(),
+                user.getEmail(),
+                user.getNascimento(), 
+                user.getProfissao());
+            retorno.add(user_list);
+        }
+        
+        return retorno;
+
     }
 
     public User getUserById(Integer id){
@@ -36,6 +54,10 @@ public class UserService {
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public User findByEmailandSenha(String email, String senha){
+        return userRepository.findByEmailAndSenha(email,senha);
     }
 
     public boolean authenticated(String email, String senha) {

@@ -2,7 +2,7 @@ package org.example.cliente.controllers;
 
 import java.io.IOException;
 
-import org.example.cliente.repository.UserRepository;
+
 import org.example.cliente.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 @Controller
 public class LogarController {
-    @FXML private TextField txtUsuario;
+    @FXML private TextField txtEmail;
     @FXML private PasswordField txtSenha;
     @FXML private CheckBox chkLembrar;     // opcional
     @FXML private Label lblMensagem;       // feedback
@@ -26,22 +26,22 @@ public class LogarController {
 
     @FXML
     private void initialize() {
-        // Foco inicial no usuário
-        txtUsuario.requestFocus();
+        // Foco inicial no email
+        txtEmail.requestFocus();
         // Limpa mensagem ao digitar
-        txtUsuario.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
+        txtEmail.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         txtSenha.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         btnEntrar.setOnAction(e -> entrar());
     }
 
     @FXML
     private void entrar() {
-        String usuario = txtUsuario.getText() != null ? txtUsuario.getText().trim() : "";
+        String email = txtEmail.getText() != null ? txtEmail.getText().trim() : "";
         String senha = txtSenha.getText() != null ? txtSenha.getText() : "";
 
-        if (usuario.isEmpty()) {
-            lblMensagem.setText("Informe o usuário.");
-            txtUsuario.requestFocus();
+        if (email.isEmpty()) {
+            lblMensagem.setText("Informe o email.");
+            txtEmail.requestFocus();
             return;
         }
         if (senha.isEmpty()) {
@@ -49,29 +49,38 @@ public class LogarController {
             txtSenha.requestFocus();
             return;
         }
+        if (!email.matches(".*@.*")) {
+            lblMensagem.setText("E-mail inválido. Deve conter '@'.");
+            txtEmail.requestFocus();
+            return;
+        }
         try {
-            validarCredenciais(txtUsuario.getText().trim(), txtSenha.getText().trim());
+            validarCredenciais(txtEmail.getText().trim(), txtSenha.getText().trim());
         } catch (IOException e) {
             lblMensagem.setText("Erro ao carregar a tela principal.");
             e.printStackTrace();
         }
     }
 
-    private void validarCredenciais(String usuario, String senha) throws IOException {
+    private void validarCredenciais(String email, String senha) throws IOException {
         // Fecha a aplicação ou limpa os campos
-        if (userService.validarCredenciais(usuario, senha)) {
+        if (userService.validarCredenciais(email, senha)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/home.fxml"));
             Parent root = loader.load();
-            Stage stage = new Stage();
+              // Obtém o Stage atual a partir de qualquer elemento da tela de login
+            Stage stage = (Stage) txtSenha.getScene().getWindow();
             stage.setTitle("Home");
             stage.setScene(new Scene(root));
+            HomeController homeController = loader.getController();
+            // Passa o tamanho atual do stage
+            homeController.setStageSize(stage.getWidth(), stage.getHeight());
+
             stage.show();
-            Stage loginStage = (Stage) txtSenha.getScene().getWindow();
-            loginStage.close();
+            
 
             
         } else {
-            lblMensagem.setText("Usuário ou senha inválidos.");
+            lblMensagem.setText("email ou senha inválidos.");
             txtSenha.clear();
             txtSenha.requestFocus();
         }

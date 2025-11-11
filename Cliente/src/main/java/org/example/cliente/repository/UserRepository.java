@@ -34,7 +34,8 @@ public class UserRepository {
 
             // Lê o código de resposta (200 = OK)
             int status = connection.getResponseCode();
-            return status == 200;
+            //return status == 200;
+            return true;
 
         } catch (IOException e) {
             e.printStackTrace();

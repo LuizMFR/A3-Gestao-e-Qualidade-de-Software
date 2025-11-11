@@ -51,9 +51,7 @@ public class HomeController {
     // Método chamado automaticamente após carregar o FXML
     @FXML
     public void initialize() {
-        configurarTabela();
-        carregarTransacoes();
-        atualizarResumo();
+        
     }
     public void setStageSize(double width, double height) {
         Stage stage = (Stage) lblSaldo.getScene().getWindow();

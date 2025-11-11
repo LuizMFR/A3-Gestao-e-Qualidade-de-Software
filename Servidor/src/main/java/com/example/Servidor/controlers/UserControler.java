@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,19 +33,30 @@ public class UserControler{
 
 
 
-    @GetMapping()
-    private List<User> getUsers(){
+    @GetMapping("/info")
+    private List<List<String>> getUsers(){
         return userService.getAllUsers();
     }
 
-    private User getUserById(Integer id){
-        return userService.getUserById(id);
-    }
+    // public User getUserById(Integer id){
+    //     return userService.getUserById(id);
+    // }
+
+    
 
     @GetMapping("/{id}")
     public boolean userIdExists(@PathVariable Integer id){
         return userService.existsById(id);
     }
+
+    @GetMapping("")
+    public ResponseEntity<User> authenticateUser(@RequestParam String email, @RequestParam String senha){
+        if(userService.authenticated(email, senha)){
+            return ResponseEntity.ok().body(userService.findByEmailandSenha(email, senha));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 
     @PostMapping()
     public ResponseEntity<User> createUser(@RequestBody User user){

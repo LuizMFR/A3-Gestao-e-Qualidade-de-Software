@@ -37,8 +37,8 @@
                   <Insets left="8.0" right="8.0" />
                </padding>
                <children>
-                  <Label text="Usuário" />
-                  <TextField fx:id="txtUsuario" promptText="Digite seu usuário" GridPane.rowIndex="1" />
+                  <Label text="E-mail" />
+                  <TextField fx:id="txtEmail" promptText="Digite seu e-mail" GridPane.rowIndex="1" />
                   <Label text="Senha:" GridPane.columnIndex="1" />
                   <PasswordField fx:id="txtSenha" promptText="Sua senha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <CheckBox fx:id="chkLembrar" mnemonicParsing="false" text="Lembrar-me" GridPane.rowIndex="2" />

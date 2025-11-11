@@ -1,5 +1,6 @@
 package org.example.cliente.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Transacao {
@@ -25,6 +26,10 @@ public class Transacao {
         this.dataTransacao= dataTransacao;
         this.valor = valor;
         this.tipo = tipo;
+    }
+
+    public Transacao(LocalDate now, String string, String string2, String string3, double d) {
+        //TODO Auto-generated constructor stub
     }
 
     //Iniciando os Getters e Setters

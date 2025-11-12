@@ -11,16 +11,16 @@ public class Category {
     private Integer id;
     private String descricao;
     private String tipo;
-    private User user;
+    private Integer usuarioID;
 
     public Category() {
     }
 
-    public Category(Integer id, String descricao, String tipo, User user) {
+    public Category(Integer id, String descricao, String tipo, Integer usuarioID) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo;
-        this.user = user;
+        this.usuarioID = usuarioID;
     }
 
     public Integer getId() {
@@ -47,11 +47,11 @@ public class Category {
         this.tipo = tipo;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUsuarioID() {
+        return usuarioID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsuarioID(Integer usuarioID) {
+        this.usuarioID = usuarioID;
     }
 }

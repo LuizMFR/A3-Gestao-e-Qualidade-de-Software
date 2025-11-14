@@ -24,7 +24,7 @@ public class CategoryControler {
     @GetMapping("/{userId}")
     public ResponseEntity<List<Category>> listForUser(@PathVariable int userId){
         if (categoryService.listForUser(userId).isEmpty()){
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(categoryService.listForUser(userId));
     }
@@ -64,3 +64,4 @@ public class CategoryControler {
         return ResponseEntity.internalServerError().build();
     }
 }
+

@@ -16,8 +16,7 @@ public class Category {
     public Category() {
     }
 
-    public Category(Integer id, String descricao, String tipo, Integer usuarioID) {
-        this.id = id;
+    public Category(String descricao, String tipo, Integer usuarioID) {
         this.descricao = descricao;
         this.tipo = tipo;
         this.usuarioID = usuarioID;

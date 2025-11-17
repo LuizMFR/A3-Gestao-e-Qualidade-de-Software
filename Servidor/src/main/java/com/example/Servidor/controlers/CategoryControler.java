@@ -23,10 +23,12 @@ public class CategoryControler {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Category>> listForUser(@PathVariable int userId){
-        if (categoryService.listForUser(userId).isEmpty()){
+
+        List<Category> categories = categoryService.listForUser(userId);
+        if (categories.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(categoryService.listForUser(userId));
+        return ResponseEntity.ok().body(categories);
     }
 
     @PostMapping

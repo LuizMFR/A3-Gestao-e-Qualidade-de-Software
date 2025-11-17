@@ -49,11 +49,13 @@ public class UserControler{
 
     @GetMapping("/{id}")
     public ResponseEntity<Boolean> userIdExists(@PathVariable Integer id){
-        if (!userService.existsById(id) || id == null){
+
+        Boolean userExists = userService.existsById(id);
+        if (!userExists || id == null){
             return ResponseEntity.badRequest().build();
             
         }
-        return ResponseEntity.ok().body(userService.existsById(id));
+        return ResponseEntity.ok().body(userExists);
     }
 
     @GetMapping("")

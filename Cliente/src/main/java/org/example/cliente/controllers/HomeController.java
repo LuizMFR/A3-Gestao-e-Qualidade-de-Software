@@ -3,6 +3,7 @@ package org.example.cliente.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
@@ -129,7 +130,61 @@ public class HomeController {
     // Botões principais
     @FXML
     private void novaTransacao(ActionEvent event) {
-        System.out.println("Abrir tela de nova transação...");
+        
+        // Cria um diálogo modal simples
+        Dialog<Transacao> dialog = new Dialog<>();
+        dialog.setTitle("Nova Transação");
+        dialog.setHeaderText("Preencha os dados da nova transação");
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        // Campos da tela
+        DatePicker dpData = new DatePicker(LocalDate.now());
+        TextField txtDescricao = new TextField();
+        ComboBox<String> cbCategoria = new ComboBox<>(FXCollections.observableArrayList(
+                "Salário", "Alimentação", "Serviços", "Transporte", "Lazer", "Outros"
+        ));
+        ComboBox<String> cbTipo = new ComboBox<>(FXCollections.observableArrayList("Entrada", "Saída"));
+        TextField txtValor = new TextField();
+
+        // Layout (organização dos campos)
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.addRow(0, new Label("Data:"), dpData);
+        grid.addRow(1, new Label("Descrição:"), txtDescricao);
+        grid.addRow(2, new Label("Categoria:"), cbCategoria);
+        grid.addRow(3, new Label("Tipo:"), cbTipo);
+        grid.addRow(4, new Label("Valor (R$):"), txtValor);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Define como o resultado será criado
+        dialog.setResultConverter(botao -> {
+            if (botao == ButtonType.OK) {
+                try {
+                    double valor = Double.parseDouble(txtValor.getText().replace(",", "."));
+                    return new Transacao(
+                            dpData.getValue(),
+                            txtDescricao.getText().trim(),
+                            cbCategoria.getValue(),
+                            cbTipo.getValue(),
+                            valor
+                    );
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Verifique os campos preenchidos.", ButtonType.OK);
+                    alert.showAndWait();
+                    return null;
+                }
+            }
+            return null;
+        });
+
+        // Exibe a janela e trata o resultado
+        dialog.showAndWait().ifPresent(nova -> {
+            listaTransacoes.add(0, nova);
+            tblTransacoes.refresh();
+            atualizarResumo();
+        });
     }
 
     @FXML

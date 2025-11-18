@@ -34,8 +34,11 @@ public class UserControler{
 
 
     @GetMapping("/info")
-    private List<List<String>> getUsers(){
-        return userService.getAllUsers();
+    private ResponseEntity<List<List<String>>> getUsers(){
+        if(userService.getAllUsers().isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     // public User getUserById(Integer id){
@@ -45,8 +48,14 @@ public class UserControler{
     
 
     @GetMapping("/{id}")
-    public boolean userIdExists(@PathVariable Integer id){
-        return userService.existsById(id);
+    public ResponseEntity<Boolean> userIdExists(@PathVariable Integer id){
+
+        Boolean userExists = userService.existsById(id);
+        if (!userExists || id == null){
+            return ResponseEntity.badRequest().build();
+            
+        }
+        return ResponseEntity.ok().body(userExists);
     }
 
     @GetMapping("")

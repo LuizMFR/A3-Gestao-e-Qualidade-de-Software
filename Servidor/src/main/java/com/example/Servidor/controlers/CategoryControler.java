@@ -1,12 +1,12 @@
-package com.example.Servidor.controlers;
+package com.example.servidor.controlers;
 
-
-import com.example.Servidor.entities.Category;
-import com.example.Servidor.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.servidor.entities.Category;
+import com.example.servidor.services.CategoryService;
 
 import java.util.List;
 

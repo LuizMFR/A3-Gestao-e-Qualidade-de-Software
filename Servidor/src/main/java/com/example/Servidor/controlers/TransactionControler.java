@@ -1,11 +1,12 @@
-package com.example.Servidor.controlers;
+package com.example.servidor.controlers;
 
 
-import com.example.Servidor.entities.Transaction;
-import com.example.Servidor.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.servidor.entities.Transaction;
+import com.example.servidor.services.TransactionService;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class TransactionControler {
         return ResponseEntity.ok().body(transactions);
     }
 
-    @GetMapping("/categoria/{userId}")
+    @GetMapping("/categoria/{categoryId}")
     public ResponseEntity<List<Transaction>> listForCategory(@PathVariable int categoryId){
 
         List<Transaction> transactions = transactionService.listForCategory(categoryId);
@@ -40,7 +41,7 @@ public class TransactionControler {
         return ResponseEntity.ok().body(transactions);
     }
 
-    @GetMapping("/tipo/{userId}")
+    @GetMapping("/tipo/{type}")
     public ResponseEntity<List<Transaction>> listForType(@PathVariable String type){
 
         List<Transaction> transactions = transactionService.listForType(type);
@@ -53,20 +54,20 @@ public class TransactionControler {
 
 
     @PostMapping
-    public ResponseEntity<Transaction> createCategory(@RequestBody Transaction category){
-        if(transactionService.createCategory(category) == null){
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction){
+        if(transactionService.createTransaction(transaction) == null){
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().body(category);
+        return ResponseEntity.ok().body(transaction);
         
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Transaction> updateCategory(
+    public ResponseEntity<Transaction> updateTransaction(
         @PathVariable Integer id, 
         @RequestBody Transaction category){
 
-        if(transactionService.updateCategory(id, category) == null){
+        if(transactionService.updateTransaction(id, category) == null){
             return ResponseEntity.notFound().build();
         }
         

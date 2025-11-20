@@ -1,14 +1,18 @@
-package com.example.Servidor.repositories;
+package com.example.servidor.repositories;
 
 
-import com.example.Servidor.entities.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.servidor.entities.Transaction;
+
 import java.util.List;
 
+@Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
-    List<Transaction> findByUsuarioID(int userId);
+    List<Transaction> findByUsuarioId(int userId);
 
-    List<Transaction> findByCategoriaID(int categoryId);
+    List<Transaction> findByCategoriaId(int categoryId);
 
-    List<Transaction> findByType(String type);
+    List<Transaction> findByTipo(String type);
 }

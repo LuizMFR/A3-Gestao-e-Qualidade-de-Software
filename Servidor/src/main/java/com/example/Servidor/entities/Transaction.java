@@ -1,27 +1,36 @@
-package com.example.Servidor.entities;
+package com.example.servidor.entities;
 
 import jakarta.persistence.*;
+import java.sql.Date;
 
 @Entity
-@Table(name = "Transacao")
+@Table(name = "transacoes")
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
     private String tipo;
     private float valor;
+
+    @Column(name = "DataTransacao")
+    private Date dataTransacao;
+
+    @Column(name = "UsuarioID")
     private Integer usuarioId;
+
+    @Column(name = "CategoriaID")
     private Integer categoriaId;
 
     public Transaction() {
     }
 
-    public Transaction(String descricao, String tipo, float valor, Integer usuarioId, Integer categoriaId) {
+    public Transaction(String descricao, String tipo, float valor, Date dataTransacao, Integer usuarioId, Integer categoriaId) {
         this.descricao = descricao;
         this.tipo = tipo;
         this.valor = valor;
+        this.dataTransacao = dataTransacao;
         this.usuarioId = usuarioId;
         this.categoriaId = categoriaId;
     }
@@ -72,5 +81,13 @@ public class Transaction {
 
     public void setCategoriaId(Integer categoriaId) {
         this.categoriaId = categoriaId;
+    }
+
+    public Date getDataTransacao() {
+        return dataTransacao;
+    }
+
+    public void setDataTransacao(Date data) {
+        this.dataTransacao = data;
     }
 }

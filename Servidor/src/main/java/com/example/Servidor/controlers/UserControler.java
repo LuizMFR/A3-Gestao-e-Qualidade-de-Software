@@ -1,7 +1,5 @@
-package com.example.Servidor.controlers;
+package com.example.servidor.controlers;
 
-import com.example.Servidor.entities.User;
-import com.example.Servidor.services.UserService;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.servidor.entities.User;
+import com.example.servidor.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 

@@ -1,9 +1,10 @@
-package com.example.Servidor.services;
+package com.example.servidor.services;
 
-import com.example.Servidor.entities.Transaction;
-import com.example.Servidor.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.servidor.entities.Transaction;
+import com.example.servidor.repositories.TransactionRepository;
 
 import java.util.List;
 
@@ -24,30 +25,30 @@ public class TransactionService {
     }
 
     public List<Transaction> listAll(){
-        return TransactionRepository.findAll();
+        return transactionRepository.findAll();
     }
 
     public List<Transaction> listForUser(int userId){
-        return transactionRepository.findByUsuarioID(userId);
+        return transactionRepository.findByUsuarioId(userId);
     }
 
     public List<Transaction> listForCategory(int categoryId){
-        return transactionRepository.findByCategoriaID(categoryId);
+        return transactionRepository.findByCategoriaId(categoryId);
     }
 
     public List<Transaction> listForType(String type){
-        return transactionRepository.findByType(type);
+        return transactionRepository.findByTipo(type);
     }
 
 
-    public Transaction createCategory(Transaction transaction){
+    public Transaction createTransaction(Transaction transaction){
         if(transaction.getUsuarioId() == null || !userService.existsById(transaction.getUsuarioId())){
             return null;
         }
         return transactionRepository.save(transaction);
     }
 
-    public Transaction updateCategory(Integer id, Transaction newTransactionData){
+    public Transaction updateTransaction(Integer id, Transaction newTransactionData){
         Transaction transaction = newTransactionData;
         transaction.setId(id);
         return transactionRepository.save(transaction);

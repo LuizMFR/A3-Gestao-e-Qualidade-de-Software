@@ -1,11 +1,11 @@
-package com.example.Servidor.services;
-
-import com.example.Servidor.entities.Category;
-import com.example.Servidor.repositories.CategoryRepository;
-import com.example.Servidor.services.UserService;
+package com.example.servidor.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.servidor.entities.Category;
+import com.example.servidor.repositories.CategoryRepository;
+import com.example.servidor.services.UserService;
 
 import java.util.List;
 

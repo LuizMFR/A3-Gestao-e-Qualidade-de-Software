@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns="http://javafx.com/javafx/21"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.example.cliente.controllers.HomeController"
-           stylesheets="@../css/styles.css"
-           styleClass="app-bg"
-           prefWidth="1200" prefHeight="720">
+<StackPane prefHeight="720" prefWidth="1200" styleClass="app-bg" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cliente.controllers.HomeController">
 
     <children>
         <!-- Janela com bordas arredondadas -->
-        <BorderPane fx:id="root"
-                    prefWidth="1120" prefHeight="660"
-                    maxWidth="1120" maxHeight="660"
-                    styleClass="app-card">
+        <BorderPane fx:id="root" maxHeight="660" maxWidth="1120" prefHeight="660" prefWidth="1120" styleClass="app-card">
 
             <!-- APP BAR (TOPO) -->
             <top>
                 <HBox spacing="12" styleClass="appbar" BorderPane.alignment="CENTER_LEFT">
-                    <padding><Insets top="10" right="14" bottom="10" left="14"/></padding>
+                    <padding><Insets bottom="10" left="14" right="14" top="10" /></padding>
                     <children>
                         <!-- LOGO -->
                         <ImageView fitHeight="74" fitWidth="71" preserveRatio="true">
@@ -34,34 +34,25 @@
 
                         
 
-                        <Pane HBox.hgrow="ALWAYS"/>
-
-                        <!-- BUSCA -->
-                        <TextField fx:id="txtBusca" promptText="Buscar transações..."
-                                   styleClass="input-appbar" prefWidth="320"/>
-
-                        <!-- BOTÕES DA APPBAR -->
-                        <Button text="Notificações" onAction="#abrirNotificacoes" styleClass="btn-appbar"/>
-                        <Button text="Sair" onAction="#sair" styleClass="btn-danger"/>
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Button onAction="#sair" styleClass="btn-danger" text="Sair" />
                     </children>
                 </HBox>
             </top>
 
             <!-- MENU LATERAL -->
             <left>
-                <VBox spacing="10" prefWidth="240" BorderPane.alignment="CENTER_LEFT">
-                    <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+                <VBox prefWidth="240" spacing="10" BorderPane.alignment="CENTER_LEFT">
+                    <padding><Insets bottom="8" left="8" right="8" top="8" /></padding>
                     <children>
                         <VBox spacing="8" styleClass="menu-card">
-                            <Label text="Navegação" styleClass="menu-section"/>
-                            <Button text="Dashboard" onAction="#navDashboard" styleClass="btn-ghost"/>
-                            <Button text="Transações" onAction="#navTransacoes" styleClass="btn-ghost"/>
-                            <Button text="Categorias" onAction="#navCategorias" styleClass="btn-ghost"/>
-                            <Button text="Relatórios" onAction="#navRelatorios" styleClass="btn-ghost"/>
-                            <Button text="Configurações" onAction="#navConfiguracoes" styleClass="btn-ghost"/>
+                            <Label styleClass="menu-section" text="Navegação" />
+                            <Button onAction="#navDashboard" styleClass="btn-ghost" text="Dashboard" />
+                            <Button onAction="#navTransacoes" styleClass="btn-ghost" text="Transações" />
+                            <Button onAction="#navCategorias" styleClass="btn-ghost" text="Categorias" />
+                            <Button onAction="#navRelatorios" styleClass="btn-ghost" text="Relatórios" />
+                            <Button onAction="#navConfiguracoes" styleClass="btn-ghost" text="Configurações" />
                         </VBox>
-
-                        <Button text="+ Nova Transação" onAction="#novaTransacao" styleClass="btn-primary"/>
                     </children>
                 </VBox>
             </left>
@@ -70,48 +61,47 @@
             <center>
                 <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
                     <content>
-                        <VBox spacing="16" prefWidth="800">
-                            <padding><Insets top="12" right="8" bottom="16" left="8"/></padding>
+                        <VBox prefWidth="800" spacing="16">
+                            <padding><Insets bottom="16" left="8" right="8" top="12" /></padding>
 
                             <children>
-                                <Label text="Visão Geral" styleClass="section-title"/>
+                                <Label styleClass="section-title" text="Visão Geral" />
 
                                 <!-- CARDS -->
                                 <HBox spacing="12">
                                     <children>
                                         <VBox spacing="6" styleClass="card" HBox.hgrow="ALWAYS">
-                                            <Label text="Saldo Atual" styleClass="muted"/>
-                                            <Label fx:id="lblSaldo" text="R$ 0,00" styleClass="kpi-default"/>
+                                            <Label styleClass="muted" text="Saldo Atual" />
+                                            <Label fx:id="lblSaldo" styleClass="kpi-default" text="R$ 0,00" />
+                                        </VBox>
+
+                                        <VBox id="valorReceitas" fx:id="valorReceitas" spacing="6" styleClass="card" HBox.hgrow="ALWAYS">
+                                            <Label styleClass="muted" text="Receitas (mês)" />
+                                            <Label fx:id="lblReceitasMes" styleClass="kpi-green" text="R$ 0,00" />
                                         </VBox>
 
                                         <VBox spacing="6" styleClass="card" HBox.hgrow="ALWAYS">
-                                            <Label text="Receitas (mês)" styleClass="muted"/>
-                                            <Label fx:id="lblReceitasMes" text="R$ 0,00" styleClass="kpi-green"/>
-                                        </VBox>
-
-                                        <VBox spacing="6" styleClass="card" HBox.hgrow="ALWAYS">
-                                            <Label text="Gastos (mês)" styleClass="muted"/>
-                                            <Label fx:id="lblGastosMes" text="R$ 0,00" styleClass="kpi-red"/>
+                                            <Label styleClass="muted" text="Gastos (mês)" />
+                                            <Label fx:id="lblGastosMes" styleClass="kpi-red" text="R$ 0,00" />
                                         </VBox>
                                     </children>
                                 </HBox>
 
                                 <!-- TABELA -->
                                 <VBox spacing="8" styleClass="card">
-                                    <Label text="Transações Recentes" styleClass="card-title"/>
+                                    <Label styleClass="card-title" text="Transações Recentes" />
                                     <TableView fx:id="tblTransacoes" prefHeight="280">
                                         <columns>
-                                            <TableColumn fx:id="colData" text="Data" prefWidth="120"/>
-                                            <TableColumn fx:id="colDescricao" text="Descrição" prefWidth="260"/>
-                                            <TableColumn fx:id="colCategoria" text="Categoria" prefWidth="160"/>
-                                            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
-                                            <TableColumn fx:id="colValor" text="Valor" prefWidth="140"/>
+                                            <TableColumn fx:id="colData" prefWidth="120" text="Data" />
+                                            <TableColumn fx:id="colDescricao" prefWidth="260" text="Descrição" />
+                                            <TableColumn fx:id="colCategoria" prefWidth="160" text="Categoria" />
+                                            <TableColumn fx:id="colTipo" prefWidth="100" text="Tipo" />
+                                            <TableColumn fx:id="colValor" prefWidth="191.20013427734375" text="Valor" />
                                         </columns>
                                     </TableView>
-                                    <HBox spacing="8" alignment="CENTER_RIGHT">
+                                    <HBox alignment="CENTER_RIGHT" spacing="8">
                                         <children>
-                                            <Button text="+ Adicionar" onAction="#novaTransacao" styleClass="btn-primary"/>
-                                            <Button text="Exportar" onAction="#exportarTransacoes" styleClass="btn-soft-dark"/>
+                                            <Button onAction="#novaTransacao" styleClass="btn-primary" text="+ Adicionar" />
                                         </children>
                                     </HBox>
                                 </VBox>

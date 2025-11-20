@@ -1,7 +1,5 @@
-package com.example.Servidor.controlers;
+package com.example.servidor.controlers;
 
-import com.example.Servidor.entities.User;
-import com.example.Servidor.services.UserService;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.servidor.entities.User;
+import com.example.servidor.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -49,11 +51,13 @@ public class UserControler{
 
     @GetMapping("/{id}")
     public ResponseEntity<Boolean> userIdExists(@PathVariable Integer id){
-        if (!userService.existsById(id) || id == null){
+
+        Boolean userExists = userService.existsById(id);
+        if (!userExists || id == null){
             return ResponseEntity.badRequest().build();
             
         }
-        return ResponseEntity.ok().body(userService.existsById(id));
+        return ResponseEntity.ok().body(userExists);
     }
 
     @GetMapping("")

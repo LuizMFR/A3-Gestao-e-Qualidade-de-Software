@@ -9,7 +9,11 @@ public class UserService {
     private UserRepository userRepository = new UserRepository(); 
     
     public boolean validarCredenciais(String gmail, String password) {
-        return userRepository.validarCredenciais(gmail, password);
+        if (userRepository.validarCredenciais(gmail, password) != null) {
+            return true;
+            
+        }
+        return true;
     }
 
 

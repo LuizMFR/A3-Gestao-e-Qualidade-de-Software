@@ -1,12 +1,12 @@
-package com.example.Servidor.controlers;
+package com.example.servidor.controlers;
 
-
-import com.example.Servidor.entities.Category;
-import com.example.Servidor.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.servidor.entities.Category;
+import com.example.servidor.services.CategoryService;
 
 import java.util.List;
 
@@ -23,10 +23,12 @@ public class CategoryControler {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Category>> listForUser(@PathVariable int userId){
-        if (categoryService.listForUser(userId).isEmpty()){
+
+        List<Category> categories = categoryService.listForUser(userId);
+        if (categories.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(categoryService.listForUser(userId));
+        return ResponseEntity.ok().body(categories);
     }
 
     @PostMapping

@@ -71,9 +71,7 @@ public class LogarController {
             Stage stage = (Stage) txtSenha.getScene().getWindow();
             stage.setTitle("Home");
             stage.setScene(new Scene(root));
-            HomeController homeController = loader.getController();
-            // Passa o tamanho atual do stage
-            homeController.setStageSize(stage.getWidth(), stage.getHeight());
+ // Define o tamanho desejado
 
             stage.show();
             

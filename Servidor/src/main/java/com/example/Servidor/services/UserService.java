@@ -1,14 +1,13 @@
-package com.example.Servidor.services;
+package com.example.servidor.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.servidor.entities.User;
+import com.example.servidor.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
-import com.example.Servidor.entities.User;
-import com.example.Servidor.repositories.UserRepository;
 
 /* SERVICE É A CAMADA INTERMEDIÁRIA QUE FAZ AS VERIFICAÇÕES DOS INPUTS
  * DO CONTROLER E ACIONA OS COMANDOS DO REPOSITÓRIO
@@ -56,6 +55,14 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    public User findbyId(Integer id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public User findByEmailandSenha(String email, String senha){
         return userRepository.findByEmailAndSenha(email,senha);
     }
@@ -75,9 +82,6 @@ public class UserService {
 
     public User updateUser(Integer id, User newUserData){
 
-        if (this.existsByEmail(newUserData.getEmail())){
-            return null;
-        }
 
         User newUser = newUserData;
         newUser.setId(id);

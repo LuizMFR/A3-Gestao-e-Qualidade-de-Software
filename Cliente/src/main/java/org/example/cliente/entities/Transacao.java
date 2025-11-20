@@ -1,15 +1,15 @@
 package org.example.cliente.entities;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 public class Transacao {
     
     private int id;//ID do usuario
     private int usuarioId;
-    private int categoriaId;
+    private String categoria;
     private String descricao;
-    private Date dataTransacao;
+    private LocalDate dataTransacao;
     private float valor;
     private String tipo;
 
@@ -18,18 +18,22 @@ public class Transacao {
     }
 
     //Iniciando o contrutor completo
-    public Transacao(int usuarioId, int categoriaId, String descricao, Date dataTransacao, float valor, String tipo){
+    public Transacao(int usuarioId, String categoria, String descricao, LocalDate dataTransacao, float valor, String tipo){
 
         this.usuarioId = usuarioId;
-        this.categoriaId = categoriaId;
+        this.categoria = categoria;
         this.descricao = descricao;
         this.dataTransacao= dataTransacao;
         this.valor = valor;
         this.tipo = tipo;
     }
 
-    public Transacao(LocalDate now, String string, String string2, String string3, double d) {
-        //TODO Auto-generated constructor stub
+    public Transacao(LocalDate now, String descricao, String categoria, String tipo, float valor) {
+        this.dataTransacao = now;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.tipo = tipo;
+        this.valor = valor;
     }
 
     //Iniciando os Getters e Setters
@@ -44,11 +48,11 @@ public class Transacao {
         this.usuarioId = usuarioId;
     }
 
-     public int getCategoriaId() {
-        return categoriaId;
+     public String getCategoria() {
+        return categoria;
     }
-    public void setCategoriaId(int categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getDescricao() {
@@ -58,10 +62,10 @@ public class Transacao {
         this.descricao = descricao;
     }
     
-    public Date getDataTransacao() {
+    public LocalDate getDataTransacao() {
         return dataTransacao;
     }
-    public void setDataTransacao(Date dataTransacao) {
+    public void setDataTransacao(LocalDate dataTransacao) {
         this.dataTransacao = dataTransacao;
     }
     

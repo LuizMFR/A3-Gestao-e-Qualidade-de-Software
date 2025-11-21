@@ -1,6 +1,7 @@
 package org.example.cliente;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -11,7 +12,9 @@ public class SpringBootApp {
 
     public static void init() {
         if (context == null) {
-            context = SpringApplication.run(SpringBootApp.class);
+            SpringApplication app = new SpringApplication(SpringBootApp.class);
+            app.setWebApplicationType(WebApplicationType.NONE);
+            context = app.run();
         }
     }
 
@@ -20,7 +23,9 @@ public class SpringBootApp {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootApp.class, args);
+        SpringApplication app = new SpringApplication(SpringBootApp.class);
+        app.setWebApplicationType(WebApplicationType.NONE);
+        context = app.run(args);
     }
 
 }

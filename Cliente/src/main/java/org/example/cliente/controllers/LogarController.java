@@ -31,7 +31,7 @@ public class LogarController {
         // Limpa mensagem ao digitar
         txtEmail.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         txtSenha.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
-        btnEntrar.setOnAction(e -> entrar());
+        btnEntrar.setOnAction(e -> entrar());   
     }
 
     @FXML
@@ -71,8 +71,6 @@ public class LogarController {
             Stage stage = (Stage) txtSenha.getScene().getWindow();
             stage.setTitle("Home");
             stage.setScene(new Scene(root));
- // Define o tamanho desejado
-
             stage.show();
             
 

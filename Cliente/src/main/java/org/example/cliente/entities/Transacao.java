@@ -10,7 +10,7 @@ public class Transacao {
     private String categoria;
     private String descricao;
     private LocalDate dataTransacao;
-    private float valor;
+    private Double valor;
     private String tipo;
 
     //Construtor vazio (necessário para frameworks e JavaFX)
@@ -18,7 +18,7 @@ public class Transacao {
     }
 
     //Iniciando o contrutor completo
-    public Transacao(int usuarioId, String categoria, String descricao, LocalDate dataTransacao, float valor, String tipo){
+    public Transacao(int usuarioId, String categoria, String descricao, LocalDate dataTransacao, Double valor, String tipo){
 
         this.usuarioId = usuarioId;
         this.categoria = categoria;
@@ -28,7 +28,7 @@ public class Transacao {
         this.tipo = tipo;
     }
 
-    public Transacao(LocalDate now, String descricao, String categoria, String tipo, float valor) {
+    public Transacao(LocalDate now, String descricao, String categoria, String tipo, Double valor) {
         this.dataTransacao = now;
         this.descricao = descricao;
         this.categoria = categoria;
@@ -69,10 +69,10 @@ public class Transacao {
         this.dataTransacao = dataTransacao;
     }
     
-    public float getValor() {
+    public Double getValor() {
         return valor;
     }
-    public void setValor(float valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 

@@ -1,8 +1,5 @@
 package org.example.cliente.entities;
 
-import java.util.Date;
-import java.util.List;
-
 public class User {
 
     private Integer id;

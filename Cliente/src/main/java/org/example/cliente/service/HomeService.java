@@ -1,8 +1,10 @@
 package org.example.cliente.service;
 
 
+import java.util.Collections;
 import java.util.List;
 
+import org.example.cliente.entities.Categoria;
 import org.example.cliente.entities.Transacao;
 import org.example.cliente.repository.HomeRepository;
 
@@ -16,7 +18,14 @@ public class HomeService {
 
     }
 
-    public List<Transacao> getAllTransacoes() {
-        return homeRepository.findAll();
-    }   
+    public List<Transacao> getAllTransacoes(Integer userId) {
+        List<Transacao> lista = homeRepository.findByUserId(userId);
+        return lista != null ? lista : List.of();
+    }
+
+    public List<Categoria> getAllCategorias(int userId) {
+        List<Categoria> categorias = homeRepository.findCategoriasByUserId(userId);
+        return categorias != null ? categorias : Collections.emptyList();
+}
+    
 }

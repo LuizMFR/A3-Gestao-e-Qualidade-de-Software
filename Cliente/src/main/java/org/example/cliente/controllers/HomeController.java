@@ -13,11 +13,16 @@ import javafx.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.example.cliente.entities.Transacao;
+import org.example.cliente.entities.TransacaoView;
 import org.example.cliente.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.example.cliente.entities.User;
+import org.example.cliente.entities.Categoria;
 
 public class HomeController {
 
@@ -35,34 +40,42 @@ public class HomeController {
     private Label lblGastosMes;
 
     @FXML
-    private TableView<Transacao> tblTransacoes;
+    private TableView<TransacaoView> tblTransacoes;
 
     @FXML
-    private TableColumn<Transacao, LocalDate> colData;
+    private TableColumn<TransacaoView, LocalDate> colData;
 
     @FXML
-    private TableColumn<Transacao, String> colDescricao;
+    private TableColumn<TransacaoView, String> colDescricao;
 
     @FXML
-    private TableColumn<Transacao, String> colCategoria;
+    private TableColumn<TransacaoView, String> colCategoria;
 
     @FXML
-    private TableColumn<Transacao, String> colTipo;
+    private TableColumn<TransacaoView, String> colTipo;
 
     @FXML
-    private TableColumn<Transacao, Double> colValor;
+    private TableColumn<TransacaoView, Double> colValor;
 
-    private final ObservableList<Transacao> listaTransacoes = FXCollections.observableArrayList();
+    private final ObservableList<TransacaoView> listaTransacoes = FXCollections.observableArrayList();
     
+    private User userLoggedIn;
+
     @Autowired
     private HomeService homeService = new HomeService();
     // Método chamado automaticamente após carregar o FXML
     @FXML
     public void initialize() {
+        
+    }
+
+    public void setUserLoggedIn(User user) {
+        this.userLoggedIn = user;
         carregarTransacoes();
         configurarTabela();
         atualizarResumo();
     }
+
     public void setStageSize(double width, double height) {
         Stage stage = (Stage) lblSaldo.getScene().getWindow();
         if (stage != null) {
@@ -72,13 +85,14 @@ public class HomeController {
     }
 
     private void configurarTabela() {
+
         colData.setCellValueFactory(new PropertyValueFactory<>("dataTransacao"));
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        colCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        colCategoria.setCellValueFactory(new PropertyValueFactory<>("categoriaDesc"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         colValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         // Formatar a data no padrão brasileiro
-        colData.setCellFactory(column -> new TableCell<Transacao, LocalDate>() {
+        colData.setCellFactory(column -> new TableCell<TransacaoView, LocalDate>() {
             @Override
             protected void updateItem(LocalDate data, boolean empty) {
                 super.updateItem(data, empty);
@@ -95,22 +109,81 @@ public class HomeController {
     }
 
     private void carregarTransacoes() {
-        List<Transacao> transacoes = homeService.getAllTransacoes();
-        for (Transacao t : transacoes) {
-            listaTransacoes.add(t);
+        List<Transacao> transacoes = homeService.getAllTransacoes(userLoggedIn.getId());
+        List<Categoria> categorias = homeService.getAllCategorias(userLoggedIn.getId());
+
+        // evita NPEs
+        if (transacoes == null || transacoes.isEmpty()) {
+            System.out.println("Nenhuma transação encontrada para o usuário ID: " + userLoggedIn.getId());
+            listaTransacoes.clear();
+            tabelaAtualizarUI();
+            return;
         }
+
+        if (categorias == null) {
+            System.out.println("Lista de categorias veio nula — usando lista vazia.");
+            categorias = List.of();
+        }
+
+        // Cria mapa categoriaId -> descricao evitando loops aninhados
+        Map<Integer, String> mapaCategorias = categorias.stream()
+                .collect(Collectors.toMap(
+                        Categoria::getId,
+                        c -> {
+                            try {
+                                String d = c.getDescricao();
+                                if (d != null && !d.isBlank()) return d;
+                            } catch (Throwable ex) {  }
+
+                            try {
+                                
+                                String n = c.getDescricao();
+                                if (n != null && !n.isBlank()) return n;
+                            } catch (Throwable ex) { /* ignora */ }
+
+                            return "Categoria desconhecida";
+                        }
+                ));
+
+        listaTransacoes.clear();
+
+        for (Transacao t : transacoes) {
+            String descCategoria = mapaCategorias.getOrDefault(t.getCategoriaId(), "Categoria desconhecida");
+
+            // monta a TransacaoView na ordem: id, descricao, categoriaDescricao, tipo, valor, data
+            TransacaoView view = new TransacaoView(
+                    t.getId(),
+                    descCategoria,
+                    t.getDescricao(),
+                    t.getDataTransacao(),
+                    t.getValor(),
+                    t.getTipo()
+            );
+
+            listaTransacoes.add(view);
+        }
+
+        tabelaAtualizarUI();
         atualizarResumo();
     }
+
+// helper que força a atualização da UI (evitar problemas se a tabela não estiver configurada ainda)
+private void tabelaAtualizarUI() {
+    if (tblTransacoes != null) {
+        tblTransacoes.setItems(listaTransacoes);
+        tblTransacoes.refresh();
+    }
+}
 
     private void atualizarResumo() {
         double totalReceitas = listaTransacoes.stream()
                .filter(t -> "entrada".equalsIgnoreCase(t.getTipo()))
-                .mapToDouble(Transacao::getValor)
+                .mapToDouble(TransacaoView::getValor)
                 .sum();
 
         double totalGastos = listaTransacoes.stream()
                 .filter(t -> "saída".equalsIgnoreCase(t.getTipo()))
-                .mapToDouble(Transacao::getValor)
+                .mapToDouble(TransacaoView::getValor)
                 .sum();
 
         double saldo = totalReceitas - totalGastos;
@@ -131,9 +204,24 @@ public class HomeController {
         System.out.println("Ir para Transações...");
     }
 
-    @FXML
+   @FXML
     private void navCategorias(ActionEvent event) {
-        System.out.println("Ir para Categorias...");
+          try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                getClass().getResource("/org/example/cliente/view/categoria.fxml"  )
+            );
+
+            javafx.scene.Parent root = loader.load();
+
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle("Categorias");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
+        }
     }
 
     @FXML
@@ -154,7 +242,8 @@ public class HomeController {
     dialog.setTitle("Nova Transação");
     dialog.setHeaderText("Preencha os dados da nova transação");
     dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
+    //TODO: Adicionar categorias direito
+    /*
     DatePicker dpData = new DatePicker();
     TextField txtDescricao = new TextField();
     ComboBox<String> cbCategoria = new ComboBox<>(FXCollections.observableArrayList(
@@ -186,14 +275,14 @@ public class HomeController {
 
                 Double valor = Double.parseDouble(txtValor.getText().replace(",", "."));
 
-                // Atenção: certifique-se de que a ordem abaixo bate com o construtor de Transacao
+
                     System.out.println("------------------------");
                     System.out.println(cbTipo.getValue());
                     System.out.println("------------------------------------");
                 return new Transacao(
                         dpData.getValue(),
-                        descricao,
                         cbCategoria.getValue(),
+                        descricao,
                         cbTipo.getValue(),
                         (Double) valor
                 );
@@ -225,6 +314,7 @@ public class HomeController {
         tblTransacoes.refresh();
         atualizarResumo();
         });
+         */
     }
 
 

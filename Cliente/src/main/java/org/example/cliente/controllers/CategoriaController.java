@@ -2,18 +2,23 @@ package org.example.cliente.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 
+import javafx.stage.Stage;
 import org.example.cliente.entities.Categoria;
 import org.example.cliente.entities.User;
 import org.example.cliente.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CategoriaController {
+
+    Parent homeRoot;
 
     @FXML
     private TextField textfieldTite;          // campo Título
@@ -35,6 +40,9 @@ public class CategoriaController {
 
     @FXML
     private TableColumn<Categoria, Void> tablecolAcoes;
+
+    @FXML
+    private Button btnSair;
 
     private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
 
@@ -99,4 +107,12 @@ public class CategoriaController {
         alert.setHeaderText(null);
         alert.showAndWait();
     }
+
+    public void onSairButtonClick(ActionEvent e) {
+        Stage stage = (Stage) btnSair.getScene().getWindow();
+        System.out.println("--------fdasohikghifdashujiofdashjikolhjkfdas");
+        stage.close();
+    }
+
+
 }

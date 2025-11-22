@@ -1,6 +1,7 @@
 package org.example.cliente.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -9,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import java.net.URL;
+import java.io.IOException;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,6 +26,7 @@ import org.example.cliente.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.example.cliente.entities.User;
 import org.example.cliente.entities.Categoria;
+import org.example.cliente.controllers.CategoriaController;
 
 public class HomeController {
 
@@ -58,6 +62,7 @@ public class HomeController {
     private TableColumn<TransacaoView, Double> colValor;
 
     private final ObservableList<TransacaoView> listaTransacoes = FXCollections.observableArrayList();
+    private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
     
     private User userLoggedIn;
 
@@ -146,6 +151,12 @@ public class HomeController {
                 ));
 
         listaTransacoes.clear();
+        listaCategorias.clear();
+
+        for (Categoria c : categorias) {
+            System.out.println("DEBUG Categoria -> ID: " + c.getId() + ", Descrição: '" + c.getDescricao() + "'");
+            listaCategorias.add(c);
+        }
 
         for (Transacao t : transacoes) {
             String descCategoria = mapaCategorias.getOrDefault(t.getCategoriaId(), "Categoria desconhecida");
@@ -177,12 +188,12 @@ private void tabelaAtualizarUI() {
 
     private void atualizarResumo() {
         double totalReceitas = listaTransacoes.stream()
-               .filter(t -> "entrada".equalsIgnoreCase(t.getTipo()))
+               .filter(t -> "receita".equalsIgnoreCase(t.getTipo()))
                 .mapToDouble(TransacaoView::getValor)
                 .sum();
 
         double totalGastos = listaTransacoes.stream()
-                .filter(t -> "saída".equalsIgnoreCase(t.getTipo()))
+                .filter(t -> "custo".equalsIgnoreCase(t.getTipo()))
                 .mapToDouble(TransacaoView::getValor)
                 .sum();
 
@@ -204,15 +215,25 @@ private void tabelaAtualizarUI() {
         System.out.println("Ir para Transações...");
     }
 
-   @FXML
+    @FXML
     private void navCategorias(ActionEvent event) {
           try {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
                 getClass().getResource("/org/example/cliente/view/categoria.fxml"  )
             );
+            URL fxmlURL = getClass().getResource("/org/example/cliente/view/categoria.fxml");
+            System.out.println("Debug -> " + fxmlURL);
+            Parent root = null;
+            
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            javafx.scene.Parent root = loader.load();
-
+            CategoriaController categoriaController = loader.getController();
+            categoriaController.setUserLoggedIn(userLoggedIn);
+            
             javafx.stage.Stage stage = new javafx.stage.Stage();
             stage.setTitle("Categorias");
             stage.setScene(new javafx.scene.Scene(root));
@@ -242,14 +263,13 @@ private void tabelaAtualizarUI() {
     dialog.setTitle("Nova Transação");
     dialog.setHeaderText("Preencha os dados da nova transação");
     dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-    //TODO: Adicionar categorias direito
-    /*
+    
+    
     DatePicker dpData = new DatePicker();
     TextField txtDescricao = new TextField();
     ComboBox<String> cbCategoria = new ComboBox<>(FXCollections.observableArrayList(
-            "Salário", "Alimentação", "Serviços", "Transporte", "Lazer", "Outros"
-    ));
-    ComboBox<String> cbTipo = new ComboBox<>(FXCollections.observableArrayList("entrada", "saída"));
+            listaCategorias.stream().map(Categoria::getDescricao).collect(Collectors.toList())));
+    ComboBox<String> cbTipo = new ComboBox<>(FXCollections.observableArrayList("receita","custo"));
     TextField txtValor = new TextField();
 
     GridPane grid = new GridPane();
@@ -279,12 +299,22 @@ private void tabelaAtualizarUI() {
                     System.out.println("------------------------");
                     System.out.println(cbTipo.getValue());
                     System.out.println("------------------------------------");
+
+                List<Categoria> userCategorias = homeService.getAllCategorias(userLoggedIn.getId());
+                int cbCategoriaID = homeService.getCategoriaIdByDesc(userCategorias,cbCategoria.getValue().strip());
+                System.out.println("DEBUG Categoria selecionada: " + cbCategoria.getValue() + " -> ID: " + cbCategoriaID);
+
+                if (cbCategoriaID == -1) {
+                    new Alert(Alert.AlertType.ERROR, "Categoria inválida. Selecione uma categoria existente.", ButtonType.OK).showAndWait();
+                    return null;
+                }
                 return new Transacao(
-                        dpData.getValue(),
-                        cbCategoria.getValue(),
+                        userLoggedIn.getId(),
+                        cbCategoriaID,
                         descricao,
-                        cbTipo.getValue(),
-                        (Double) valor
+                        dpData.getValue(),
+                        (Double) valor,
+                        cbTipo.getValue()
                 );
             } catch (NumberFormatException nfe) {
                 new Alert(Alert.AlertType.ERROR, "Valor inválido.", ButtonType.OK).showAndWait();
@@ -302,19 +332,23 @@ private void tabelaAtualizarUI() {
         Optional<Transacao> resultado = dialog.showAndWait();
 
         resultado.ifPresent(transacao -> {
-        // debug rápido: mostre todos os campos para conferência
-        System.out.println("DEBUG Transacao -> descricao: '" + transacao.getDescricao() +
+        
+        System.out.println("DEBUG Transacao -> "+
+        "usuarioID: " + transacao.getUsuarioId() +
+        "categoriaID: " + transacao.getCategoriaId() +
+        "descricao: '" + transacao.getDescricao() +
                 "', data: " + transacao.getDataTransacao() +
-                ", categoria: " + transacao.getCategoria() +
+                ", categoria: " + transacao.getCategoriaId() +
                 ", tipo: " + transacao.getTipo() +
                 ", valor: " + transacao.getValor());
 
-        // adiciona na lista e atualiza UI
-        listaTransacoes.add(0, transacao);
+        // salvar no backend
+        homeService.salvarTransacao(transacao);
         tblTransacoes.refresh();
-        atualizarResumo();
+        carregarTransacoes();
+        
         });
-         */
+        
     }
 
 

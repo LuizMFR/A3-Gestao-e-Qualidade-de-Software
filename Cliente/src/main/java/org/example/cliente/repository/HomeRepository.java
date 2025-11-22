@@ -92,5 +92,34 @@ public class HomeRepository {
         }
     }
 
-    
+    public void saveTransacao(Transacao transacao) {
+        try {
+            String requestUrl = BASE_URL;
+
+            URL url = URI.create(requestUrl).toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
+            con.setDoOutput(true);
+
+            String jsonInputString = this.mapper.writeValueAsString(transacao);
+
+            try (java.io.OutputStream os = con.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            System.out.println("DEBUG JSON Enviado: " + jsonInputString);
+
+            int status = con.getResponseCode();
+            if (status != 200 && status != 201) {
+                System.out.println("Erro POST transação: " + status);
+            }
+
+            con.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Transacao {
     
-    private int id;//ID do usuario
+    private Integer id;//ID do usuario
     private int usuarioId;
     private int categoriaId;
     private String descricao;
@@ -36,12 +36,16 @@ public class Transacao {
         this.valor = valor;
     }
 
-    //Iniciando os Getters e Setters
-    public int getId(){
+    public Integer getId(){
         return id;
     }
-     ////////////////////////////
-    public int getUsuarioI(){
+
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+
+    public int getUsuarioId(){
         return usuarioId;
     }
     public void setUsuarioId(int usuarioId){

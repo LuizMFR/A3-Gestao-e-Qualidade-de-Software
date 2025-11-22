@@ -10,6 +10,7 @@ import org.example.cliente.repository.HomeRepository;
 
 
 
+
 public class HomeService {
 
     private HomeRepository homeRepository = new HomeRepository();
@@ -26,6 +27,23 @@ public class HomeService {
     public List<Categoria> getAllCategorias(int userId) {
         List<Categoria> categorias = homeRepository.findCategoriasByUserId(userId);
         return categorias != null ? categorias : Collections.emptyList();
-}
+    }
+
+    public int getCategoriaIdByDesc(List<Categoria> categorias, String descricao) {
+         
+        
+        if (categorias != null) {
+            for (Categoria categoria : categorias) {
+                System.out.println("DEBUG Comparando: " + categoria.getDescricao() + " com " + descricao);
+                if (categoria.getDescricao().contains(descricao)) {
+                    return categoria.getId();
+                }
+            }
+        }
+        return -1; // Retorna -1 se a categoria não for encontrada
+    }
     
+    public void salvarTransacao(Transacao transacao) {
+        homeRepository.saveTransacao(transacao);
+    }
 }

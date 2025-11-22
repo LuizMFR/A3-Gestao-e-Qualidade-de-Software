@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="bg_Home2" stylesheets="@../Transação/Stylesheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="bg_Home2" stylesheets="@../Transação/Stylesheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cliente.controllers.CategoriaController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -216,13 +216,13 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TableView prefHeight="250.0" prefWidth="850.0" VBox.vgrow="ALWAYS">
-                    <columns>
-                      <TableColumn fx:id="tablecolorid" prefWidth="171.0" text="ID" />
-                      <TableColumn minWidth="0.0" prefWidth="221.0" text="Título" />
-                        <TableColumn minWidth="0.0" prefWidth="259.0" text="Decrição" />
-                        <TableColumn minWidth="0.0" prefWidth="198.0" text="Ações" />
-                    </columns>
+                  <TableView fx:id="tableCategorias" prefHeight="250.0" prefWidth="850.0" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="tablecolId" prefWidth="171.0" text="ID" />
+                        <TableColumn fx:id="tablecolTitulo" prefWidth="221.0" text="Título" />
+                        <TableColumn fx:id="tablecolDescricao" prefWidth="259.0" text="Descrição" />
+                        <TableColumn fx:id="tablecolAcoes" prefWidth="198.0" text="Ações" />
+                     </columns>
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>

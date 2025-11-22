@@ -34,6 +34,7 @@ public class LogarController {
         btnEntrar.setOnAction(e -> entrar());   
     }
 
+    
     @FXML
     private void entrar() {
         String email = txtEmail.getText() != null ? txtEmail.getText().trim() : "";
@@ -67,7 +68,10 @@ public class LogarController {
         if (userService.validarCredenciais(email, senha)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/home.fxml"));
             Parent root = loader.load();
-              // Obtém o Stage atual a partir de qualquer elemento da tela de login
+            
+            HomeController ctrl = loader.getController();
+            ctrl.setUserLoggedIn(userService.getLoggedInUser());
+
             Stage stage = (Stage) txtSenha.getScene().getWindow();
             stage.setTitle("Home");
             stage.setScene(new Scene(root));

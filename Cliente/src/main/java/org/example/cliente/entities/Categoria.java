@@ -3,31 +3,31 @@ package org.example.cliente.entities;
 public class Categoria {
 
     private int id;
-    private String nome;
+    private String descricao;
     private String tipo;
+    private int usuarioID;
 
-    //Construtor vazio (necessário para frameworks e JavaFX)
+   
     public Categoria() {
+        System.out.println("LOADING CATEGORIA -> " + this.getClass().getName());
     }
 
-    //Iniciando o contrutor completo
-    public Categoria(String nome, String tipo) {
-        this.nome = nome;
+    public Categoria(String descricao, String tipo) {
+        this.descricao = descricao;
         this.tipo = tipo;
     }
 
-    //Getters e Setters
     public int getId() {
         return id;
     }
-     ////////////////////////////
-    public String getNome() {
-        return nome;
+
+    public String getDescricao() {
+        return descricao;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
-     ////////////////////////////
+
     public String getTipo() {
         return tipo;
     }
@@ -35,4 +35,11 @@ public class Categoria {
         this.tipo = tipo;
     }
     
+    public int getUsuarioID() {
+        return usuarioID;
+    }
+
+    public void setUsuarioId(int usuarioID) {
+        this.usuarioID = usuarioID;
+    }
 }

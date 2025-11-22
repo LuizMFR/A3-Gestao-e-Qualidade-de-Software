@@ -34,7 +34,7 @@ public class UserService {
                 user.getNome(),
                 user.getSobrenome(),
                 user.getEmail(),
-                user.getNascimento(), 
+                user.getNascimento().toString(), 
                 user.getProfissao());
             retorno.add(user_list);
         }

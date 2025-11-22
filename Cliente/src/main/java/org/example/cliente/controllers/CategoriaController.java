@@ -5,7 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.List;
+
 import org.example.cliente.entities.Categoria;
+import org.example.cliente.entities.User;
+import org.example.cliente.service.HomeService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CategoriaController {
 
@@ -32,13 +38,41 @@ public class CategoriaController {
 
     private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
 
+    private User userLoggedIn;
+
+    @Autowired
+    private HomeService homeService = new HomeService();
+
     @FXML
     public void initialize() {
+        
+    }
+
+    public void setUserLoggedIn(User user) {
+        this.userLoggedIn = user;
+        carregarTransacoes();
+        configurarTabela();
+    }
+
+
+    public void configurarTabela() {
         tablecolId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tablecolTitulo.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tablecolDescricao.setCellValueFactory(new PropertyValueFactory<>("tipo") ); // usando tipo como descrição
 
         tableCategorias.setItems(listaCategorias);
+    }
+
+    public void carregarTransacoes() {
+        List<Categoria> categorias = homeService.getAllCategorias(userLoggedIn.getId());
+
+        listaCategorias.clear();
+
+        for (Categoria c : categorias) {
+            System.out.println("DEBUG Categoria -> ID: " + c.getId() + ", Descrição: '" + c.getDescricao() + "'");
+            listaCategorias.add(c);
+        }
+
     }
 
     @FXML

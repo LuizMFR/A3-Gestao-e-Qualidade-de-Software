@@ -5,90 +5,52 @@ import java.util.List;
 
 public class User {
 
-    //Iniciando as variaveis 
-    private int id;
+    private Integer id;
     private String nome;
     private String sobrenome;
     private String email;
     private String senha;
     private String profissao;
-    private Date nascimento;
-    
-    //Iniciando o Construtor
-    public User(String nome, String sobrenome, String email, String senha, String profissao, Date nascimento) {
+    private String nascimento; 
+
+
+
+    public User() {}
+
+ 
+    public User(Integer id, String nome, String sobrenome, String email, String senha,
+                String profissao, String nascimento) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.email = email;
         this.senha = senha;
         this.profissao = profissao;
         this.nascimento = nascimento;
-    }   
-
-    //Um usuario pode ter varias receitas e custos
-    private List<Transacao> transacoes;//Criando a Transacao 
-   
-
-    //Iniciando os Getters e Setters
-    public int getId(){
-        return id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome){
-        this.nome = nome;
-    }
 
-    public String getSobrenome(){
-        return sobrenome;
-    }
-    public void setSobrenome(String sobrenome){
-        this.sobrenome = sobrenome;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getEmail(){
-        return email;
-    }
-    public void setEmail(String email){
-        this.email = email;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public String getSenha(){
-        return senha;
-    }
-    public void setSenha(String senha){
-        this.senha = senha;
-    }
+    public String getSobrenome() { return sobrenome; }
+    public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
 
-    public String getProfissao(){
-        return profissao;
-    }
-    public void setProfissao(String profissao){
-        this.profissao = profissao;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public Date getNascimento(){
-        return nascimento;
-    }
-    public void setNascimento(Date nascimento){
-        this.nascimento = nascimento;
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-    //Metodos para Transacao
-    public List<Transacao> getTransacoes(){
-        return transacoes;
-    }
-     public void adicionarTransacao(Transacao transacao) {
-        this.transacoes.add(transacao);
-    }
+    public String getProfissao() { return profissao; }
+    public void setProfissao(String profissao) { this.profissao = profissao; }
 
-    public void removerTransacao(Transacao transacao) {
-        this.transacoes.remove(transacao);
-    }  
-}
+    public String getNascimento() { return nascimento; }
+    public void setNascimento(String nascimento) { this.nascimento = nascimento; }
 
-
-
+}   
 
 

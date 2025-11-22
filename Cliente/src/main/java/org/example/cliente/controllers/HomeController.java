@@ -131,9 +131,24 @@ public class HomeController {
         System.out.println("Ir para Transações...");
     }
 
-    @FXML
+   @FXML
     private void navCategorias(ActionEvent event) {
-        System.out.println("Ir para Categorias...");
+          try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                getClass().getResource("/org/example/cliente/view/categoria.fxml"  )
+            );
+
+            javafx.scene.Parent root = loader.load();
+
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle("Categorias");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
+        }
     }
 
     @FXML

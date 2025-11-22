@@ -1,5 +1,6 @@
 package com.example.servidor.entities;
 
+import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class User {
     private String email;
     private String senha;
     private String profissao;
-    private String nascimento;
+    private Date nascimento;
 
     public User() {
     }
@@ -30,7 +31,7 @@ public class User {
             String email, 
             String senha, 
             String profissao, 
-            String nascimento) {
+            Date nascimento) {
                 
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -87,11 +88,11 @@ public class User {
         this.profissao = profissao;
     }
 
-    public String getNascimento() {
+    public Date getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
 

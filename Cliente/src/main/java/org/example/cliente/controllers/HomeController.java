@@ -12,9 +12,12 @@ import javafx.event.ActionEvent;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.example.cliente.entities.Transacao;
+import org.example.cliente.service.HomeService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class HomeController {
 
@@ -50,7 +53,9 @@ public class HomeController {
     private TableColumn<Transacao, Double> colValor;
 
     private final ObservableList<Transacao> listaTransacoes = FXCollections.observableArrayList();
-
+    
+    @Autowired
+    private HomeService homeService = new HomeService();
     // Método chamado automaticamente após carregar o FXML
     @FXML
     public void initialize() {
@@ -90,12 +95,11 @@ public class HomeController {
     }
 
     private void carregarTransacoes() {
-        // Exemplo de dados fictícios
-        listaTransacoes.addAll(
-            new Transacao(LocalDate.now(), "Salário", "Receita", "Entrada", 3500.00),
-            new Transacao(LocalDate.now(), "Supermercado", "Alimentação", "Saída", 280.50),
-            new Transacao(LocalDate.now(), "Internet", "Serviços", "Saída", 120.00 )
-        );
+        List<Transacao> transacoes = homeService.getAllTransacoes();
+        for (Transacao t : transacoes) {
+            listaTransacoes.add(t);
+        }
+        atualizarResumo();
     }
 
     private void atualizarResumo() {
@@ -127,7 +131,7 @@ public class HomeController {
         System.out.println("Ir para Transações...");
     }
 
-    @FXML
+   @FXML
     private void navCategorias(ActionEvent event) {
           try {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
@@ -144,9 +148,8 @@ public class HomeController {
         }catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
-        }//teste
+        }
     }
-
 
     @FXML
     private void navRelatorios(ActionEvent event) {
@@ -172,7 +175,7 @@ public class HomeController {
     ComboBox<String> cbCategoria = new ComboBox<>(FXCollections.observableArrayList(
             "Salário", "Alimentação", "Serviços", "Transporte", "Lazer", "Outros"
     ));
-    ComboBox<String> cbTipo = new ComboBox<>(FXCollections.observableArrayList("Entrada", "Saída"));
+    ComboBox<String> cbTipo = new ComboBox<>(FXCollections.observableArrayList("entrada", "saída"));
     TextField txtValor = new TextField();
 
     GridPane grid = new GridPane();
@@ -196,15 +199,18 @@ public class HomeController {
                     return null;
                 }
 
-                float valor = Float.parseFloat(txtValor.getText().replace(",", "."));
+                Double valor = Double.parseDouble(txtValor.getText().replace(",", "."));
 
                 // Atenção: certifique-se de que a ordem abaixo bate com o construtor de Transacao
+                    System.out.println("------------------------");
+                    System.out.println(cbTipo.getValue());
+                    System.out.println("------------------------------------");
                 return new Transacao(
                         dpData.getValue(),
                         descricao,
                         cbCategoria.getValue(),
                         cbTipo.getValue(),
-                        (double) valor
+                        (Double) valor
                 );
             } catch (NumberFormatException nfe) {
                 new Alert(Alert.AlertType.ERROR, "Valor inválido.", ButtonType.OK).showAndWait();
@@ -214,7 +220,7 @@ public class HomeController {
                 return null;
             }
         }
-            atualizarResumo();
+            
             return null;
         });
 
@@ -232,6 +238,7 @@ public class HomeController {
         // adiciona na lista e atualiza UI
         listaTransacoes.add(0, transacao);
         tblTransacoes.refresh();
+        atualizarResumo();
         });
     }
 

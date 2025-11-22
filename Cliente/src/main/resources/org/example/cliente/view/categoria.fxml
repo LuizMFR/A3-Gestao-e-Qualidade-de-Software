@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="bg_Home2" stylesheets="@../Transação/Stylesheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cliente.controllers.CategoriaController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="bg_Home2" stylesheets="@../Transação/Stylesheet.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cliente.controllers.CategoriaController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -86,33 +75,6 @@
                   <String fx:value="cor_de_fundo" />
                </styleClass>
             </Button>
-            <Button layoutX="50.0" layoutY="60.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Usuários">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="75.0" />
-               </VBox.margin>
-               <styleClass>
-                  <String fx:value="btn-ghost" />
-                  <String fx:value="cor_de_fundo" />
-               </styleClass>
-            </Button>
-            <Button layoutX="10.0" layoutY="90.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Materiais">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="75.0" />
-               </VBox.margin>
-               <styleClass>
-                  <String fx:value="btn-ghost" />
-                  <String fx:value="cor_de_fundo" />
-               </styleClass>
-            </Button>
-            <Button layoutX="10.0" layoutY="120.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Pedidos">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="75.0" />
-               </VBox.margin>
-               <styleClass>
-                  <String fx:value="btn-ghost" />
-                  <String fx:value="cor_de_fundo" />
-               </styleClass>
-            </Button>
             <Button layoutX="10.0" layoutY="150.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Transação">
                <VBox.margin>
                   <Insets bottom="20.0" left="75.0" />
@@ -123,7 +85,7 @@
                </styleClass>
             </Button>
             <Pane prefHeight="159.0" prefWidth="250.0" VBox.vgrow="NEVER" />
-            <Button layoutX="85.0" layoutY="332.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" styleClass="btn-danger" text="Sair">
+                <Button fx:id="btnSair" layoutX="85.0" layoutY="332.0" mnemonicParsing="false" onAction="#onSairButtonClick" prefHeight="38.0" prefWidth="97.0" styleClass="btn-danger" text="Sair">
                <VBox.margin>
                   <Insets left="75.0" />
                </VBox.margin>

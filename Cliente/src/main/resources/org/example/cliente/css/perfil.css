@@ -1,0 +1,130 @@
+/* ====== Paleta ====== */
+.app-bg {
+    -fx-background-color: linear-gradient(to bottom, #2F7CF8, #1E5ED6);
+}
+
+.app-card {
+    -fx-background-color: rgba(255,255,255,0.96);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(255,255,255,0.35);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 16, 0.2, 0, 6);
+}
+
+/* ===== APP BAR (TOPO) ===== */
+.appbar {
+    -fx-background-color: #e8e8f0ab;  /* Cor de fundo da AppBar */
+    -fx-background-radius: 14 14 0 0;  /* Bordas arredondadas */
+}
+
+/* Botão Sair (vermelho) */
+.btn-danger {
+    -fx-background-radius: 10;
+    -fx-background-color: #dc2626;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-padding: 8 14;
+    -fx-border-color: transparent;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #1f1cb9;
+}
+
+/* MENU LATERAL */
+.menu-card {
+    -fx-background-color: rgba(255,255,255,0.88);
+    -fx-background-radius: 16;
+    -fx-padding: 14;
+    -fx-border-color: #E7ECF3;
+    -fx-border-radius: 16;
+}
+
+/* Seção do menu */
+.menu-section {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B7280;
+    -fx-font-weight: bold;
+}
+
+/* Botões do menu lateral */
+.btn-ghost {
+    -fx-background-radius: 12;
+    -fx-background-color: white;
+    -fx-border-color: #E7ECF3;
+    -fx-border-radius: 12;
+    -fx-text-fill: #1F2937;
+    -fx-padding: 10 14;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0.5, 0, 2);  /* Efeito 3D suave */
+}
+
+.btn-ghost:hover {
+    -fx-background-color: #F8FAFC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.7, 0, 4);  /* Efeito mais forte no hover */
+}
+
+/* Botões principais (Adicionar, etc.) */
+.btn-primary {
+    -fx-background-radius: 12;
+    -fx-background-color: #2F7CF8;
+    -fx-text-fill: white;
+    -fx-padding: 12 16;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1E5ED6;
+}
+
+/* Estilo para os campos de entrada (input) */
+.input-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 12;
+    -fx-border-color: #E7ECF3;
+    -fx-padding: 10px;
+}
+
+/* ===== CONTEÚDO ===== */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+/* Cartões do conteúdo */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-color: #E7ECF3;
+    -fx-border-radius: 14;
+    -fx-padding: 12;
+}
+
+/* Títulos das seções */
+.card-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+/* Títulos menores (muted) */
+.muted {
+    -fx-text-fill: #6B7280;
+    -fx-font-size: 12px;
+}
+
+/* ===== TABELA ===== */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #EEF4FF;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: #E7ECF3;
+    -fx-border-radius: 10 10 0 0;
+}
+
+.table-row-cell:filled:selected, .table-cell:filled:selected {
+    -fx-background-color: rgba(47,124,248,0.15);
+}
+

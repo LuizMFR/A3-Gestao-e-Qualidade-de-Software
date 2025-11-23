@@ -14,15 +14,15 @@ public class UserService {
     
     public boolean validarCredenciais(String gmail, String password) {
 
-        //User user  = userRepository .validarCredenciais(gmail, password);
-        User user  = new User();
+        User user  = userRepository .validarCredenciais(gmail, password);
+       
         user.setId(1);
         if (user != null) {
             loggedInUser = user;
             return true;
             
         }
-        return true;
+        return false;
     }
 
     public User getLoggedInUser(){

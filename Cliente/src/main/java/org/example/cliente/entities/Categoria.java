@@ -2,7 +2,7 @@ package org.example.cliente.entities;
 
 public class Categoria {
 
-    private int id;
+    private Integer id;
     private String descricao;
     private String tipo;
     private int usuarioID;
@@ -17,8 +17,12 @@ public class Categoria {
         this.tipo = tipo;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescricao() {

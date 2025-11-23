@@ -21,6 +21,7 @@ public class UserService {
             return true;
             
         }
+        System.out.println("Usuário não encontrado ou credenciais inválidas.");
         return false;
     }
 

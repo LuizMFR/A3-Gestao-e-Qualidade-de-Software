@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="640.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testea3.CadastroController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="640.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cliente.controllers.CadastroController">
    <children>
       <VBox alignment="CENTER" layoutX="150.0" layoutY="284.0" maxWidth="420.0" prefHeight="200.0" prefWidth="420.0" spacing="16.0" styleClass="container" AnchorPane.bottomAnchor="317.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="284.0">
          <children>
@@ -44,14 +44,21 @@
                   <PasswordField fx:id="txtSenha" promptText="Crie uma senha " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Confirmar:" GridPane.rowIndex="3" />
                   <PasswordField fx:id="txtConfirmar" promptText="Repita a senha " GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Telefone:" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtTelefone" promptText="(00) 00000-0000" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Profissao:" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtProfissao" promptText="Profissao" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="Nascimento:" GridPane.rowIndex="5" />
                   <DatePicker fx:id="dpNascimento" prefHeight="37.0" prefWidth="253.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>
+            <Label fx:id="lblMensagem"
+                   text=""
+                   styleClass="mensagem"
+                   wrapText="true"
+                   alignment="CENTER"
+                   maxWidth="300" />
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#criarConta" text="Cadastrar-se " />
+            <Button fx:id="btnCadastro" defaultButton="true" mnemonicParsing="false" onAction="#criarConta" text="Cadastrar-se " />
+            <Button fx:id="btnCancelar" defaultButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
          </children>
          <padding>
             <Insets top="24.0" />

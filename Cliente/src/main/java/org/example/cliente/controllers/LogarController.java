@@ -7,6 +7,8 @@ import org.example.cliente.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.example.cliente.controllers.HomeController;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +35,7 @@ public class LogarController {
         txtEmail.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         txtSenha.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         btnEntrar.setOnAction(e -> entrar());   
-        btnCadastro.setOnAction(e -> cadastro());
+        btnCadastro.setOnAction(e -> Cadastrar());
     }
 
     
@@ -89,19 +91,18 @@ public class LogarController {
         return validado;
         
     }
-
-    public void cadastro(){
-         try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/cadastro.fxml"));
-                Parent root = loader.load();
-                
-                Stage stage = (Stage) btnCadastro.getScene().getWindow();
-                stage.setTitle("Cadastro");
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException ex) {
-                lblMensagem.setText("Erro ao carregar a tela de cadastro.");
-                ex.printStackTrace();
-            }
+    @FXML
+    public void Cadastrar() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/cadastro.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Cadastro de Usuário");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

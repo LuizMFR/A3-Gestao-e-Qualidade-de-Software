@@ -5,17 +5,24 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+
+import org.example.cliente.service.CadastroService;
+
 public class CadastroController {
 
     @FXML private TextField txtNome;
+    @FXML private TextField txtSobrenome;
     @FXML private TextField txtEmail;
     @FXML private PasswordField txtSenha;
     @FXML private PasswordField txtConfirmar;
     @FXML private TextField txtProfissao;
     @FXML private DatePicker dpNascimento;
     @FXML private Label lblMensagem;
-    @FXML private Button btnCadastro;
+    @FXML private Button btnCadastrar;
     @FXML private Button btnCancelar;
+    @FXML private Label lblErro;
+
+    private CadastroService cadastroService = new CadastroService();
 
     private static final Pattern EMAIL_REGEX =
             Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
@@ -25,20 +32,23 @@ public class CadastroController {
         lblMensagem.setText("");
         // Limpa mensagens ao digitar
         txtNome.textProperty().addListener((o, a, b) -> clearMsg());
+        txtSobrenome.textProperty().addListener((o, a, b) -> clearMsg());
         txtEmail.textProperty().addListener((o, a, b) -> clearMsg());
         txtSenha.textProperty().addListener((o, a, b) -> clearMsg());
         txtConfirmar.textProperty().addListener((o, a, b) -> clearMsg());
         txtProfissao.textProperty().addListener((o, a, b) -> clearMsg());
+        txtProfissao.textProperty().addListener((o, a, b) -> clearMsg());
         dpNascimento.valueProperty().addListener((o, a, b) -> clearMsg());
-        btnCadastro.setOnAction(e -> criarConta());
-        btnCancelar.setOnAction(e -> cancelar());
+        btnCadastrar.setOnAction(e -> CriarConta());
+        btnCancelar.setOnAction(e -> Cancelar());
     }   
 
     private void clearMsg() { lblMensagem.setText(""); }
 
     @FXML
-    private void criarConta() {
+    private void CriarConta() {
         String nome = safe(txtNome.getText());
+        String sobrenome = safe(txtSobrenome.getText());
         String email = safe(txtEmail.getText());
         String senha = safe(txtSenha.getText());
         String confirmar = safe(txtConfirmar.getText());
@@ -47,29 +57,41 @@ public class CadastroController {
 
         // Validações simples
         if (nome.isEmpty()) {
-            erro("Informe o nome.");
+            setLblErro("Informe seu nome");
+            erro("");
+            return;
+        }
+        if (sobrenome.isEmpty()) {
+            setLblErro("Informe seu sobrenome.");
+            erro("");
             return;
         }
         if (email.isEmpty() || !EMAIL_REGEX.matcher(email).matches()) {
-            erro("E-mail inválido.");
+            setLblErro("E-mail inválido.");
+            erro("");
             return;
         }
         if (senha.length() < 6) {
-            erro("A senha deve ter pelo menos 6 caracteres.");
+            setLblErro("A senha deve ter pelo menos 6 caracteres.");
+            erro("");
             return;
         }
         if (!senha.equals(confirmar)) {
-            erro("As senhas não conferem.");
+            setLblErro("As senhas não conferem.");
+            erro("");
+            return;
+        }
+            if (profissao.isEmpty()) {
+            setLblErro("Você precisa informar sua profissão.");
+            erro("");
             return;
         }
         if (nascimento == null) {
-            erro("Informe a data de nascimento.");
+            setLblErro("Informe a data de nascimento.");
+            erro("");
             return;
         }
 
-        // Simulação de “salvar”
-        System.out.printf("Novo cadastro: %s | %s | %s | %s | %s%n",
-                nome, email, senha, profissao, nascimento);
 
         // Mensagem de sucesso
         lblMensagem.getStyleClass().remove("error");
@@ -77,21 +99,17 @@ public class CadastroController {
             lblMensagem.getStyleClass().add("success");
         lblMensagem.setText("Conta criada com sucesso!");
 
-        // TODO: trocar de cena para tela principal ou voltar ao login
-        // ex.: SceneNavigator.go("login.fxml");
+        cadastroService.criarConta(nome, sobrenome, email, senha, profissao, nascimento);
+
+    }
+
+    public void setLblErro(String msg) {
+        lblErro.setText(msg);
     }
 
     @FXML
-    private void cancelar() {
-        // Exemplo simples: limpar campos
-        txtNome.clear();
-        txtEmail.clear();
-        txtSenha.clear();
-        txtConfirmar.clear();
-        txtProfissao.clear();
-        dpNascimento.setValue(null);
-        lblMensagem.setText("");
-        // Ou voltar para a tela de login, se desejar.
+    private void Cancelar() {
+        btnCancelar.getScene().getWindow().hide();
     }
 
     private void erro(String msg) {

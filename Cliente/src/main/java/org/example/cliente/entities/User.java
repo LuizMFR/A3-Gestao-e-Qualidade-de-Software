@@ -48,6 +48,12 @@ public class User {
     public String getNascimento() { return nascimento; }
     public void setNascimento(String nascimento) { this.nascimento = nascimento; }
 
+
+    public void setPassword(String password) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setPassword'");
+    }
+
 }   
 
 

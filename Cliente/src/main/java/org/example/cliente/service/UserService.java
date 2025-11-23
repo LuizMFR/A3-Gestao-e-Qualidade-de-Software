@@ -15,8 +15,7 @@ public class UserService {
     public boolean validarCredenciais(String gmail, String password) {
 
         User user  = userRepository .validarCredenciais(gmail, password);
-        
-        System.out.println(user);
+       
         if (user != null) {
             loggedInUser = user;
             return true;

@@ -1,4 +1,4 @@
-package com.example.testea3;
+package org.example.cliente.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,10 +11,13 @@ public class CadastroController {
     @FXML private TextField txtEmail;
     @FXML private PasswordField txtSenha;
     @FXML private PasswordField txtConfirmar;
-    @FXML private TextField txtTelefone;
+    @FXML private TextField txtProfissao;
     @FXML private DatePicker dpNascimento;
     @FXML private CheckBox chkTermos;
     @FXML private Label lblMensagem;
+    @FXML private Button btnCadastrar;
+    @FXML private Button btnCancelar;
+    @FXML private Label lblErro;
 
     private static final Pattern EMAIL_REGEX =
             Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
@@ -27,7 +30,7 @@ public class CadastroController {
         txtEmail.textProperty().addListener((o, a, b) -> clearMsg());
         txtSenha.textProperty().addListener((o, a, b) -> clearMsg());
         txtConfirmar.textProperty().addListener((o, a, b) -> clearMsg());
-        txtTelefone.textProperty().addListener((o, a, b) -> clearMsg());
+        txtProfissao.textProperty().addListener((o, a, b) -> clearMsg());
         dpNascimento.valueProperty().addListener((o, a, b) -> clearMsg());
     }
 
@@ -39,38 +42,45 @@ public class CadastroController {
         String email = safe(txtEmail.getText());
         String senha = safe(txtSenha.getText());
         String confirmar = safe(txtConfirmar.getText());
-        String telefone = safe(txtTelefone.getText());
+        String profissao = safe(txtProfissao.getText());
         LocalDate nascimento = dpNascimento.getValue();
 
         // Validações simples
         if (nome.isEmpty()) {
-            erro("Informe o nome.");
+            setLblErro("Informe seu nome");
+            erro("");
             return;
         }
         if (email.isEmpty() || !EMAIL_REGEX.matcher(email).matches()) {
-            erro("E-mail inválido.");
+            setLblErro("E-mail inválido.");
+            erro("");
             return;
         }
         if (senha.length() < 6) {
-            erro("A senha deve ter pelo menos 6 caracteres.");
+            setLblErro("A senha deve ter pelo menos 6 caracteres.");
+            erro("");
             return;
         }
         if (!senha.equals(confirmar)) {
-            erro("As senhas não conferem.");
+            setLblErro("As senhas não conferem.");
+            erro("");
+            return;
+        }
+            if (profissao.isEmpty()) {
+            setLblErro("Você precisa informar sua profissão.");
+            erro("");
             return;
         }
         if (nascimento == null) {
-            erro("Informe a data de nascimento.");
-            return;
-        }
-        if (!chkTermos.isSelected()) {
-            erro("Você precisa aceitar os Termos.");
+            setLblErro("Informe a data de nascimento.");
+            erro("");
             return;
         }
 
+
         // Simulação de “salvar”
         System.out.printf("Novo cadastro: %s | %s | %s | %s | %s%n",
-                nome, email, telefone, nascimento, chkTermos.isSelected());
+                nome, email, profissao, nascimento, chkTermos.isSelected());
 
         // Mensagem de sucesso
         lblMensagem.getStyleClass().remove("error");
@@ -82,18 +92,13 @@ public class CadastroController {
         // ex.: SceneNavigator.go("login.fxml");
     }
 
+    public void setLblErro(String msg) {
+        lblErro.setText(msg);
+    }
+
     @FXML
-    private void cancelar() {
-        // Exemplo simples: limpar campos
-        txtNome.clear();
-        txtEmail.clear();
-        txtSenha.clear();
-        txtConfirmar.clear();
-        txtTelefone.clear();
-        dpNascimento.setValue(null);
-        chkTermos.setSelected(false);
-        lblMensagem.setText("");
-        // Ou voltar para a tela de login, se desejar.
+    private void Cancelar() {
+        btnCancelar.getScene().getWindow().hide();
     }
 
     private void erro(String msg) {

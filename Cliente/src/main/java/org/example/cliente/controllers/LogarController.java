@@ -7,6 +7,8 @@ import org.example.cliente.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.example.cliente.controllers.HomeController;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -83,6 +85,20 @@ public class LogarController {
             lblMensagem.setText("email ou senha inválidos.");
             txtSenha.clear();
             txtSenha.requestFocus();
+        }
+    }
+    @FXML
+    public void Cadastrar() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/cadastro.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Cadastro de Usuário");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

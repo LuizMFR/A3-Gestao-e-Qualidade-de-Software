@@ -16,7 +16,6 @@ public class UserService {
 
         User user  = userRepository .validarCredenciais(gmail, password);
        
-        user.setId(1);
         if (user != null) {
             loggedInUser = user;
             return true;

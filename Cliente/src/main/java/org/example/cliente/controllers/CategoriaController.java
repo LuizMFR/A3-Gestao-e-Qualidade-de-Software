@@ -48,11 +48,17 @@ public class CategoriaController {
     @FXML
     private TableColumn<Categoria, Void> tablecolAcoes;
 
+    @FXML
+    private Button botaoSair;
+
+    @FXML
+    private ComboBox<String> comboTipo;
+
     private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        
+         comboTipo.getItems().addAll("Entrada", "Saída");
     }
 
     public void setUserLoggedIn(User user) {
@@ -89,7 +95,7 @@ public class CategoriaController {
         
 
         String titulo = textfieldDesc.getText().trim();
-        String tipo = textfieldType.getText().trim().toLowerCase();
+        String tipo = comboTipo.getValue();
 
         if (titulo.isEmpty()) {
             mostrarAlerta("Validação", "Informe o título da categoria.");
@@ -110,17 +116,11 @@ public class CategoriaController {
     @FXML
     private void sair(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/cliente/view/home.fxml")
-            );
-            Parent root = loader.load();
+            Stage stage = (Stage) botaoSair.getScene().getWindow();
+            stage.close();
+            
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("PerFin - Dashboard");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Erro", "Não foi possível voltar para a tela inicial (Home).");
         }

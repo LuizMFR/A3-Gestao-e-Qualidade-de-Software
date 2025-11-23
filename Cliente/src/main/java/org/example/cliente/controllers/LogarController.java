@@ -58,34 +58,36 @@ public class LogarController {
             return;
         }
         try {
-            validarCredenciais(txtEmail.getText().trim(), txtSenha.getText().trim());
+            Boolean usuarioValido = validarCredenciais(txtEmail.getText().trim(), txtSenha.getText().trim());
+            System.out.println(usuarioValido);
+            if (usuarioValido) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/home.fxml"));
+                Parent root = loader.load();
+                
+                HomeController ctrl = loader.getController();
+                ctrl.setUserLoggedIn(userService.getLoggedInUser());
+
+                Stage stage = (Stage) txtSenha.getScene().getWindow();
+                stage.setTitle("Home");
+                stage.setScene(new Scene(root));
+                stage.show();
+            
+            } else {
+                System.out.println("Credenciais inválidas.");
+                lblMensagem.setText("Email ou senha incorretos");
+            }
         } catch (IOException e) {
             lblMensagem.setText("Erro ao carregar a tela principal.");
             e.printStackTrace();
         }
     }
 
-    private void validarCredenciais(String email, String senha) throws IOException {
+    private boolean validarCredenciais(String email, String senha) throws IOException {
         // Fecha a aplicação ou limpa os campos
-        if (userService.validarCredenciais(email, senha)) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/home.fxml"));
-            Parent root = loader.load();
-            
-            HomeController ctrl = loader.getController();
-            ctrl.setUserLoggedIn(userService.getLoggedInUser());
-
-            Stage stage = (Stage) txtSenha.getScene().getWindow();
-            stage.setTitle("Home");
-            stage.setScene(new Scene(root));
-            stage.show();
-            
-
-            
-        } else {
-            lblMensagem.setText("email ou senha inválidos.");
-            txtSenha.clear();
-            txtSenha.requestFocus();
-        }
+        boolean validado =  userService.validarCredenciais(email, senha);
+        System.out.println("logarcontroler_validarcredencias" + validado);
+        return validado;
+        
     }
 
     public void cadastro(){

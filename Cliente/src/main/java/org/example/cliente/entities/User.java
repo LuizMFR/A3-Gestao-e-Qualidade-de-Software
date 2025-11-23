@@ -59,6 +59,12 @@ public class User {
     public LocalDate getNascimento() { return nascimento; }
     public void setNascimento(LocalDate nascimento) { this.nascimento = nascimento; }
 
+
+    public void setPassword(String password) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setPassword'");
+    }
+
 }   
 
 

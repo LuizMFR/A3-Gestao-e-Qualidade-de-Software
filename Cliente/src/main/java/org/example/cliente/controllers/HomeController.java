@@ -258,8 +258,8 @@ private void tabelaAtualizarUI() {
     // Botões principais
    @FXML
     private void novaTransacao(ActionEvent event) {
-        
-    carregarTransacoes(); // garante que categorias estão carregadas
+
+    atualizaCategorias();
 
     Dialog<Transacao> dialog = new Dialog<>();
     dialog.setTitle("Nova Transação");
@@ -368,5 +368,13 @@ private void tabelaAtualizarUI() {
     private void sair(ActionEvent event) {
         System.out.println("Encerrando sessão...");
         System.exit(0);
+    }
+
+    private void atualizaCategorias(){
+        listaCategorias.clear();
+        List<Categoria> categorias = homeService.getAllCategorias(userLoggedIn.getId());
+        for (Categoria c : categorias) {
+            listaCategorias.add(c);
+        }
     }
 }

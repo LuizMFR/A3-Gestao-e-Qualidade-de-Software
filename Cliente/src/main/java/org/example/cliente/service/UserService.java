@@ -14,15 +14,16 @@ public class UserService {
     
     public boolean validarCredenciais(String gmail, String password) {
 
-        //User user  = userRepository .validarCredenciais(gmail, password);
-        User user  = new User();
-        user.setId(1);
+        User user  = userRepository .validarCredenciais(gmail, password);
+        
+        System.out.println(user);
         if (user != null) {
             loggedInUser = user;
             return true;
             
         }
-        return true;
+        System.out.println("Usuário não encontrado ou credenciais inválidas.");
+        return false;
     }
 
     public User getLoggedInUser(){

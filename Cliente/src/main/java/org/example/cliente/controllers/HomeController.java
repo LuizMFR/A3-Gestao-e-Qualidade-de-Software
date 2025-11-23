@@ -258,6 +258,8 @@ private void tabelaAtualizarUI() {
     // Botões principais
    @FXML
     private void novaTransacao(ActionEvent event) {
+        
+    carregarTransacoes(); // garante que categorias estão carregadas
 
     Dialog<Transacao> dialog = new Dialog<>();
     dialog.setTitle("Nova Transação");

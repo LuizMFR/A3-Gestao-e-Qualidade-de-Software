@@ -10,7 +10,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -21,9 +20,13 @@
     
     <children>
         <BorderPane fx:id="root" maxHeight="660" maxWidth="1120" prefHeight="660" prefWidth="1120" styleClass="app-card">
+
+            <!-- TOPO / APP BAR -->
             <top>
                 <HBox spacing="12" styleClass="appbar" BorderPane.alignment="CENTER_LEFT">
-                    <padding><Insets bottom="10" left="14" right="14" top="10" /></padding>
+                    <padding>
+                        <Insets bottom="10" left="14" right="14" top="10" />
+                    </padding>
                     <children>
                         <ImageView fitHeight="74" fitWidth="71" preserveRatio="true">
                            <image>
@@ -31,66 +34,60 @@
                            </image>
                         </ImageView>
 
-                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label styleClass="section-title" text="Meu Perfil" />
+
+                        <HBox HBox.hgrow="ALWAYS" />
                         <Button onAction="#sair" styleClass="btn-danger" text="Sair" />
                     </children>
                 </HBox>
             </top>
 
-            <left>
-                <VBox prefWidth="240" spacing="10" BorderPane.alignment="CENTER_LEFT">
-                    <padding><Insets top="8" right="8" bottom="8" left="8" /></padding>
-                    <children>
-                        <VBox spacing="8" styleClass="menu-card">
-                            <Label styleClass="menu-section" text="Navegação" />
-                            <Button fx:id="btnDashboard" onAction="#navDashboard" styleClass="btn-ghost" text="Dashboard" />
-                            <Button fx:id="btnTransacoes" onAction="#navTransacoes" styleClass="btn-ghost" text="Transações" />
-                            <Button fx:id="btnCategorias" onAction="#navCategorias" styleClass="btn-ghost" text="Categorias" />
-                            <Button fx:id="btnRelatorios" onAction="#navRelatorios" styleClass="btn-ghost" text="Relatórios" />
-                            <Button fx:id="btnConfiguracoes" onAction="#navConfiguracoes" styleClass="btn-ghost" text="Configurações" />
-                        </VBox>
-                        <Button fx:id="btnPerfil" styleClass="btn-primary" text="Meu Perfil" VBox.vgrow="ALWAYS">
-                            <VBox.margin><Insets top="16" /></VBox.margin>
-                        </Button>
-                    </children>
-                </VBox>
-            </left>
+            <!-- SEM MENU LATERAL -->
 
+            <!-- CONTEÚDO CENTRAL -->
             <center>
                 <VBox spacing="16" styleClass="app-card">
                     <padding>
                         <Insets top="24.0" right="24.0" bottom="24.0" left="24.0" />
                     </padding>
-                    <Label styleClass="section-title" text="Meu Perfil" />
+
                     <VBox spacing="16" styleClass="card">
                         <padding>
                             <Insets top="16.0" right="16.0" bottom="16.0" left="16.0" />
                         </padding>
+
                         <VBox spacing="4">
                             <Label styleClass="muted" text="Nome" />
                             <TextField fx:id="textfieldNome" promptText="Seu primeiro nome" styleClass="input-field" />
                         </VBox>
+
                         <VBox spacing="4">
                             <Label styleClass="muted" text="Sobrenome" />
                             <TextField fx:id="textfieldSobrenome" promptText="Seu sobrenome" styleClass="input-field" />
                         </VBox>
+
                         <VBox spacing="4">
                             <Label styleClass="muted" text="Email" />
                             <TextField fx:id="textfieldEmail" promptText="email@exemplo.com" styleClass="input-field" />
                         </VBox>
+
                         <VBox spacing="4">
                             <Label styleClass="muted" text="Profissão" />
                             <TextField fx:id="textfieldProfissao" promptText="Ex: Desenvolvedor, Contador" styleClass="input-field" />
                         </VBox>
+
                         <VBox spacing="4">
                             <Label styleClass="muted" text="Nova Senha (deixe em branco para manter a atual)" />
                             <PasswordField fx:id="passwordfieldSenha" promptText="Mínimo 8 caracteres" styleClass="input-field" />
                         </VBox>
+
                         <VBox spacing="4">
                             <Label styleClass="muted" text="Data de Nascimento" />
                             <DatePicker fx:id="datepickerNascimento" styleClass="input-field" />
                         </VBox>
+
                         <Label fx:id="lblMensagem" text="" styleClass="mensagem-status" />
+
                         <HBox alignment="CENTER_RIGHT">
                              <Button fx:id="btnSalvar" onAction="#salvarPerfil" styleClass="btn-primary" text="Salvar Alterações" />
                         </HBox>

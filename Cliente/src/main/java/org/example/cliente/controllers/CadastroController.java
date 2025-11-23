@@ -100,7 +100,7 @@ public class CadastroController {
         lblMensagem.setText("Conta criada com sucesso!");
 
         userService.criarConta(nome, sobrenome, email, senha, profissao, nascimento);
-        btnCancelar.getScene().getWindow().hide();
+        Cancelar();
     }
 
     public void setLblErro(String msg) {

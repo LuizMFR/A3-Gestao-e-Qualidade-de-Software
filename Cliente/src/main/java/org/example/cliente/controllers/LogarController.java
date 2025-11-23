@@ -20,6 +20,7 @@ public class LogarController {
     @FXML private CheckBox chkLembrar;     // opcional
     @FXML private Label lblMensagem;       // feedback
     @FXML private Button btnEntrar;
+    @FXML private Button btnCadastro;
     @Autowired
     UserService userService;
 
@@ -32,6 +33,7 @@ public class LogarController {
         txtEmail.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         txtSenha.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         btnEntrar.setOnAction(e -> entrar());   
+        btnCadastro.setOnAction(e -> cadastro());
     }
 
     
@@ -84,5 +86,20 @@ public class LogarController {
             txtSenha.clear();
             txtSenha.requestFocus();
         }
+    }
+
+    public void cadastro(){
+         try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/cadastro.fxml"));
+                Parent root = loader.load();
+                
+                Stage stage = (Stage) btnCadastro.getScene().getWindow();
+                stage.setTitle("Cadastro");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                lblMensagem.setText("Erro ao carregar a tela de cadastro.");
+                ex.printStackTrace();
+            }
     }
 }

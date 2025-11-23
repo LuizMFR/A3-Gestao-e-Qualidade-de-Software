@@ -1,4 +1,4 @@
-package com.example.testea3;
+package org.example.cliente.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,10 +11,11 @@ public class CadastroController {
     @FXML private TextField txtEmail;
     @FXML private PasswordField txtSenha;
     @FXML private PasswordField txtConfirmar;
-    @FXML private TextField txtTelefone;
+    @FXML private TextField txtProfissao;
     @FXML private DatePicker dpNascimento;
-    @FXML private CheckBox chkTermos;
     @FXML private Label lblMensagem;
+    @FXML private Button btnCadastro;
+    @FXML private Button btnCancelar;
 
     private static final Pattern EMAIL_REGEX =
             Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
@@ -27,9 +28,11 @@ public class CadastroController {
         txtEmail.textProperty().addListener((o, a, b) -> clearMsg());
         txtSenha.textProperty().addListener((o, a, b) -> clearMsg());
         txtConfirmar.textProperty().addListener((o, a, b) -> clearMsg());
-        txtTelefone.textProperty().addListener((o, a, b) -> clearMsg());
+        txtProfissao.textProperty().addListener((o, a, b) -> clearMsg());
         dpNascimento.valueProperty().addListener((o, a, b) -> clearMsg());
-    }
+        btnCadastro.setOnAction(e -> criarConta());
+        btnCancelar.setOnAction(e -> cancelar());
+    }   
 
     private void clearMsg() { lblMensagem.setText(""); }
 
@@ -39,7 +42,7 @@ public class CadastroController {
         String email = safe(txtEmail.getText());
         String senha = safe(txtSenha.getText());
         String confirmar = safe(txtConfirmar.getText());
-        String telefone = safe(txtTelefone.getText());
+        String profissao = safe(txtProfissao.getText());
         LocalDate nascimento = dpNascimento.getValue();
 
         // Validações simples
@@ -63,14 +66,10 @@ public class CadastroController {
             erro("Informe a data de nascimento.");
             return;
         }
-        if (!chkTermos.isSelected()) {
-            erro("Você precisa aceitar os Termos.");
-            return;
-        }
 
         // Simulação de “salvar”
         System.out.printf("Novo cadastro: %s | %s | %s | %s | %s%n",
-                nome, email, telefone, nascimento, chkTermos.isSelected());
+                nome, email, senha, profissao, nascimento);
 
         // Mensagem de sucesso
         lblMensagem.getStyleClass().remove("error");
@@ -89,9 +88,8 @@ public class CadastroController {
         txtEmail.clear();
         txtSenha.clear();
         txtConfirmar.clear();
-        txtTelefone.clear();
+        txtProfissao.clear();
         dpNascimento.setValue(null);
-        chkTermos.setSelected(false);
         lblMensagem.setText("");
         // Ou voltar para a tela de login, se desejar.
     }

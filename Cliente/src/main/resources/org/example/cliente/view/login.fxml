@@ -43,6 +43,7 @@
                   <PasswordField fx:id="txtSenha" promptText="Sua senha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <CheckBox fx:id="chkLembrar" mnemonicParsing="false" text="Lembrar-me" GridPane.rowIndex="2" />
                   <Button fx:id="btnEntrar" defaultButton="true" mnemonicParsing="false" onAction="#entrar" text="Entrar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="btnCadastro" defaultButton="true" mnemonicParsing="false" onAction="#cadastro" text="Registre-se" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <Label fx:id="lblMensagem" styleClass="Error" text="&quot;&quot;" textFill="#d01414" />

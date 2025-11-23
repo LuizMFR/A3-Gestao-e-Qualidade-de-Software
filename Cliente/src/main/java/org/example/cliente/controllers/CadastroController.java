@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 
-import org.example.cliente.service.CadastroService;
+import org.example.cliente.service.UserService;
 
 public class CadastroController {
 
@@ -22,7 +22,7 @@ public class CadastroController {
     @FXML private Button btnCancelar;
     @FXML private Label lblErro;
 
-    private CadastroService cadastroService = new CadastroService();
+    private UserService userService = new UserService();
 
     private static final Pattern EMAIL_REGEX =
             Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
@@ -99,8 +99,8 @@ public class CadastroController {
             lblMensagem.getStyleClass().add("success");
         lblMensagem.setText("Conta criada com sucesso!");
 
-        cadastroService.criarConta(nome, sobrenome, email, senha, profissao, nascimento);
-
+        userService.criarConta(nome, sobrenome, email, senha, profissao, nascimento);
+        Cancelar();
     }
 
     public void setLblErro(String msg) {

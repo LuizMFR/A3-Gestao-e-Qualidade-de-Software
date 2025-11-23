@@ -22,6 +22,7 @@ public class LogarController {
     @FXML private CheckBox chkLembrar;     // opcional
     @FXML private Label lblMensagem;       // feedback
     @FXML private Button btnEntrar;
+    @FXML private Button btnCadastro;
     @Autowired
     UserService userService;
 
@@ -34,6 +35,7 @@ public class LogarController {
         txtEmail.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         txtSenha.textProperty().addListener((obs, o, n) -> lblMensagem.setText(""));
         btnEntrar.setOnAction(e -> entrar());   
+        btnCadastro.setOnAction(e -> Cadastrar());
     }
 
     

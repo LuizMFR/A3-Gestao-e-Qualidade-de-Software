@@ -7,8 +7,27 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import org.example.cliente.entities.User;
+
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class PerfilController {
+
+    private User userLoggedIn;
+
+    @FXML
+    private void initialize() {
+        // Inicializações se necessárias
+    }
+
+    
 
     // Campos para os dados de perfil
     @FXML private TextField textfieldNome;
@@ -21,27 +40,56 @@ public class PerfilController {
     // Botão para salvar as alterações
     @FXML private Button btnSalvar;
 
+    public void setUserLoggedIn(User user) {
+        this.userLoggedIn = user;
+        // Carregar os dados do usuário no formulário
+        textfieldNome.setText(user.getNome());
+        textfieldSobrenome.setText(user.getSobrenome());
+        textfieldEmail.setText(user.getEmail());
+        textfieldProfissao.setText(user.getProfissao());
+        passwordfieldSenha.setText(user.getSenha());
+        if (user.getNascimento() != null) {
+            datepickerNascimento.setValue(user.getNascimento());
+        }
+    }
     // Método chamado quando o botão "Salvar Alterações" é pressionado
     @FXML
     public void salvarPerfil(ActionEvent event) {
-        // Coleta os valores inseridos nos campos de texto
         String nome = textfieldNome.getText();
         String sobrenome = textfieldSobrenome.getText();
         String email = textfieldEmail.getText();
         String profissao = textfieldProfissao.getText();
         String senha = passwordfieldSenha.getText();
-        String nascimento = datepickerNascimento.getValue() != null ? datepickerNascimento.getValue().toString() : "Não informado";
+        LocalDate nascimento = datepickerNascimento.getValue();
 
-        // Valida se todos os campos obrigatórios foram preenchidos
         if (nome.isEmpty() || sobrenome.isEmpty() || email.isEmpty()) {
             mostrarAlerta("Campos obrigatórios", "Nome, Sobrenome e Email são obrigatórios.");
             return;
         }
 
-        //Normalmente aqui colocamos a logica de salvar esses dados em um banco de dados. Olhar com o Leandro
+        // Aqui entraria a lógica de salvar esses dados em banco
 
-        // Exibindo uma mensagem que deu certo
         mostrarAlerta("Perfil Atualizado", "As alterações foram salvas com sucesso!");
+    }
+
+    // Botão Sair-> volta para Home (home.fxml)
+    @FXML
+    private void sair(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/example/cliente/view/home.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("PerFin - Dashboard");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Não foi possível voltar para a tela inicial (Home).");
+        }
     }
 
     // Método para exibir alertas
@@ -53,3 +101,4 @@ public class PerfilController {
         alert.showAndWait();
     }
 }
+

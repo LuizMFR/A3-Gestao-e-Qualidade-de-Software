@@ -51,7 +51,7 @@
                             <Button onAction="#navTransacoes" styleClass="btn-ghost" text="Transações" />
                             <Button onAction="#navCategorias" styleClass="btn-ghost" text="Categorias" />
                             <Button onAction="#navRelatorios" styleClass="btn-ghost" text="Relatórios" />
-                            <Button onAction="#navConfiguracoes" styleClass="btn-ghost" text="Configurações" />
+                            <Button onAction="#navPerfil" styleClass="btn-ghost" text="Perfil" />
                         </VBox>
                     </children>
                 </VBox>

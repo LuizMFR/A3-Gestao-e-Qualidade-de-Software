@@ -1,6 +1,7 @@
 package org.example.cliente.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.example.cliente.entities.User;
 import org.example.cliente.entities.Categoria;
 import org.example.cliente.controllers.CategoriaController;
+import org.example.cliente.controllers.PerfilController;
 
 public class HomeController {
 
@@ -60,6 +62,9 @@ public class HomeController {
 
     @FXML
     private TableColumn<TransacaoView, Double> colValor;
+
+    @FXML
+    private Button btnTransacao;
 
     private final ObservableList<TransacaoView> listaTransacoes = FXCollections.observableArrayList();
     private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
@@ -212,7 +217,17 @@ private void tabelaAtualizarUI() {
 
     @FXML
     private void navTransacoes(ActionEvent event) {
-        System.out.println("Ir para Transações...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/transacao.fxml"));
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Transações");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Transações.").showAndWait();
+        }
     }
 
     @FXML
@@ -251,13 +266,40 @@ private void tabelaAtualizarUI() {
     }
 
     @FXML
-    private void navConfiguracoes(ActionEvent event) {
-        System.out.println("Ir para Configurações...");
+    private void navPerfil(ActionEvent event) {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                getClass().getResource("/org/example/cliente/view/perfil.fxml"  )
+            );
+            URL fxmlURL = getClass().getResource("/org/example/cliente/view/perfil.fxml");
+            System.out.println("Debug -> " + fxmlURL);
+            Parent root = null;
+            
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            PerfilController perfilController = loader.getController();
+            perfilController.setUserLoggedIn(userLoggedIn);
+            
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle("Categorias");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
+            }
     }
 
     // Botões principais
    @FXML
     private void novaTransacao(ActionEvent event) {
+        
+    carregarTransacoes(); // garante que categorias estão carregadas
 
     atualizaCategorias();
 

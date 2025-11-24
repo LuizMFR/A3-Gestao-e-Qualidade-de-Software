@@ -37,6 +37,9 @@ public class PerfilController {
     @FXML private PasswordField passwordfieldSenha;
     @FXML private DatePicker datepickerNascimento;
 
+    @FXML
+    private Button botaoSair;
+
     // Botão para salvar as alterações
     @FXML private Button btnSalvar;
 
@@ -76,17 +79,11 @@ public class PerfilController {
     @FXML
     private void sair(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/cliente/view/home.fxml")
-            );
-            Parent root = loader.load();
+            Stage stage = (Stage) botaoSair.getScene().getWindow();
+            stage.close();
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("PerFin - Dashboard");
-            stage.setScene(new Scene(root));
-            stage.show();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             mostrarAlerta("Erro", "Não foi possível voltar para a tela inicial (Home).");
         }

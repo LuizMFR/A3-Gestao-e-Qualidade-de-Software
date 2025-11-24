@@ -37,7 +37,7 @@
                         <Label styleClass="section-title" text="Meu Perfil" />
 
                         <HBox HBox.hgrow="ALWAYS" />
-                        <Button onAction="#sair" styleClass="btn-danger" text="Sair" />
+                        <Button  fx:id="botaoSair" onAction="#sair" styleClass="btn-danger" text="Sair" />
                     </children>
                 </HBox>
             </top>

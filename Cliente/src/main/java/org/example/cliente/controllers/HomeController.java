@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.example.cliente.entities.User;
 import org.example.cliente.entities.Categoria;
 import org.example.cliente.controllers.CategoriaController;
+import org.example.cliente.controllers.PerfilController;
 
 public class HomeController {
 
@@ -265,8 +266,33 @@ private void tabelaAtualizarUI() {
     }
 
     @FXML
-    private void navConfiguracoes(ActionEvent event) {
-        System.out.println("Ir para Configurações...");
+    private void navPerfil(ActionEvent event) {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                getClass().getResource("/org/example/cliente/view/perfil.fxml"  )
+            );
+            URL fxmlURL = getClass().getResource("/org/example/cliente/view/perfil.fxml");
+            System.out.println("Debug -> " + fxmlURL);
+            Parent root = null;
+            
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            PerfilController perfilController = loader.getController();
+            perfilController.setUserLoggedIn(userLoggedIn);
+            
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle("Categorias");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
+            }
     }
 
     // Botões principais
@@ -274,6 +300,8 @@ private void tabelaAtualizarUI() {
     private void novaTransacao(ActionEvent event) {
         
     carregarTransacoes(); // garante que categorias estão carregadas
+
+    atualizaCategorias();
 
     Dialog<Transacao> dialog = new Dialog<>();
     dialog.setTitle("Nova Transação");
@@ -382,5 +410,13 @@ private void tabelaAtualizarUI() {
     private void sair(ActionEvent event) {
         System.out.println("Encerrando sessão...");
         System.exit(0);
+    }
+
+    private void atualizaCategorias(){
+        listaCategorias.clear();
+        List<Categoria> categorias = homeService.getAllCategorias(userLoggedIn.getId());
+        for (Categoria c : categorias) {
+            listaCategorias.add(c);
+        }
     }
 }

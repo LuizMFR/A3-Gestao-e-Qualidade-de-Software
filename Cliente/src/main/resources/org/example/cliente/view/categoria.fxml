@@ -37,7 +37,9 @@
                               <Pane HBox.hgrow="ALWAYS" />
 
                               <!-- BOTÃO SAIR -->
-                              <Button fx:id="botaoSair" onAction="#sair" styleClass="btn-danger" text="Sair" />
+                              <Button fx:id="botaoSair" onAction="#sair"
+                                    styleClass="btn-danger"
+                                    text="Sair" />
                         </children>
                   </HBox>
             </top>

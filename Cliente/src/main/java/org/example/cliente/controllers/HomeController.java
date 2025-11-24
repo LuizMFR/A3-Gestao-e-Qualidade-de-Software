@@ -1,6 +1,7 @@
 package org.example.cliente.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -61,6 +62,9 @@ public class HomeController {
 
     @FXML
     private TableColumn<TransacaoView, Double> colValor;
+
+    @FXML
+    private Button btnTransacao;
 
     private final ObservableList<TransacaoView> listaTransacoes = FXCollections.observableArrayList();
     private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
@@ -213,7 +217,17 @@ private void tabelaAtualizarUI() {
 
     @FXML
     private void navTransacoes(ActionEvent event) {
-        System.out.println("Ir para Transações...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/transacao.fxml"));
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Transações");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Transações.").showAndWait();
+        }
     }
 
     @FXML
@@ -284,6 +298,8 @@ private void tabelaAtualizarUI() {
     // Botões principais
    @FXML
     private void novaTransacao(ActionEvent event) {
+        
+    carregarTransacoes(); // garante que categorias estão carregadas
 
     atualizaCategorias();
 

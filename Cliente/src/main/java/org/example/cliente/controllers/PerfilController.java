@@ -79,7 +79,10 @@ public class PerfilController {
         String email = textfieldEmail.getText();
         String profissao = textfieldProfissao.getText();
         String senha = passwordfieldSenha.getText();
-        LocalDate nascimento = datepickerNascimento.getValue();
+        LocalDate nascimento = datepickerNascimento.getValue().plusDays(1);
+
+        System.out.println(userLoggedIn.getNascimento().toString());
+        System.out.println(nascimento.toString());
 
         if (nome.isEmpty()) {
             mostrarAlerta("Erro de Validação", "O campo Nome não pode estar vazio.");
@@ -131,13 +134,12 @@ public class PerfilController {
             email.equals(userLoggedIn.getEmail()) &&
             profissao.equals(userLoggedIn.getProfissao()) &&
             senha.equals(userLoggedIn.getSenha()) &&
-            nascimento.equals(userLoggedIn.getNascimento())) {
+            nascimento.equals(userLoggedIn.getNascimento().plusDays(1))) {
             mostrarAlerta("Nenhuma Alteração", "Nenhum dado foi alterado.");
             return;
         }
 
         User updatedUser = new User(
-            userLoggedIn.getId(),
             nome,
             sobrenome,
             email,
@@ -147,7 +149,7 @@ public class PerfilController {
         );
 
         try{
-            updatedUser = userService.updateUser(updatedUser);
+            updatedUser = userService.updateUser(userLoggedIn.getId(),updatedUser);
         }catch(Exception e) {
             mostrarAlerta("Erro", "Não foi possível atualizar o perfil: " 
             + e.getMessage());
@@ -166,6 +168,7 @@ public class PerfilController {
         }
 
         mostrarAlerta("Perfil Atualizado", "As alterações foram salvas com sucesso!");
+        setUserLoggedIn(updatedUser);
     }
 
 

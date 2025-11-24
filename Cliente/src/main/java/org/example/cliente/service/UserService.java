@@ -47,5 +47,9 @@ public class UserService {
         }
     }
 
+    public User updateUser(Integer id,User user) {
+        return userRepository.updateUser(id,user);
+    }
+
    
 }

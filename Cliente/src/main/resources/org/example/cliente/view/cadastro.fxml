@@ -62,7 +62,7 @@
                               <TextField fx:id="txtProfissao" promptText="Sua profissão" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Label prefHeight="6.0" prefWidth="66.0" styleClass="form-label" stylesheets="@../css/Cadastro.css" text="Nascimento:" GridPane.rowIndex="7" />
                               <DatePicker fx:id="dpNascimento" prefHeight="16.0" prefWidth="238.0" promptText="00/00/0000" styleClass="date-picker" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <Label fx:id="lblMensagem" style="-fx-text-fill: red;" text="" GridPane.rowIndex="1" />
+                              <Label fx:id="lblMensagem" style="-fx-text-fill: red;" text="" GridPane.rowIndex="8" GridPane.columnSpan="2" />
                            </children>
                         </GridPane>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
@@ -73,7 +73,7 @@
                         <Insets top="24.0" />
                      </padding>
                   </VBox>
-                  <ImageView fitHeight="95.0" fitWidth="200.0" layoutX="235.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="header">
+                  <ImageView fitHeight="95.0" fitWidth="200.0" layoutX="235.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" styleClass="header">
                      <image>
                         <Image url="@logo.png" />
                      </image>

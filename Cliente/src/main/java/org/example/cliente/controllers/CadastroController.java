@@ -59,38 +59,32 @@ public class CadastroController {
 
         // Validações simples
         if (nome.isEmpty()) {
-            setLblErro("Informe seu nome");
-            erro("");
+            erro("Informe seu nome");
             return;
         }
         if (sobrenome.isEmpty()) {
-            setLblErro("Informe seu sobrenome.");
-            erro("");
+            erro("Informe seu sobrenome.");
             return;
         }
         if (email.isEmpty() || !EMAIL_REGEX.matcher(email).matches()) {
-            setLblErro("E-mail inválido.");
-            erro("");
+            erro("E-mail inválido.");
             return;
         }
         if (senha.length() < 6) {
-            setLblErro("A senha deve ter pelo menos 6 caracteres.");
-            erro("");
+            erro("A senha deve ter pelo menos 6 caracteres.");
             return;
         }
         if (!senha.equals(confirmar)) {
-            setLblErro("As senhas não conferem.");
-            erro("");
+            erro("As senhas não conferem.");
             return;
         }
             if (profissao.isEmpty()) {
-            setLblErro("Você precisa informar sua profissão.");
-            erro("");
+            erro("Você precisa informar sua profissão.");
             return;
         }
         if (nascimento == null) {
-            setLblErro("Informe a data de nascimento.");
-            erro("");
+            erro("Informe a data de nascimento.");
+            
             return;
         }
 
@@ -104,15 +98,12 @@ public class CadastroController {
         if(userService.criarConta(nome, sobrenome, email, senha, profissao, nascimento)){
             Cancelar();
         } else {
-            setLblErro("Não foi possível criar a conta.");
-            erro("");
+            erro("Não foi possível criar a conta.");
             Cancelar();
         }
     }
 
-    public void setLblErro(String msg) {
-        lblErro.setText(msg);
-    }
+
 
     @FXML
     private void Cancelar() {

@@ -1,0 +1,78 @@
+.app-bg {
+    -fx-background-color: linear-gradient(to bottom, #2F7CF8, #1E5ED6);
+}
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+.btn-primary {
+    -fx-background-radius: 12;
+    -fx-background-color: #2F7CF8;
+    -fx-text-fill: white;
+    -fx-padding: 12 16;
+}
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 32;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.16), 20, 0, 0, 10);
+}
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #111827;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+.form-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #374151;
+}
+.text-field,
+.password-field {
+    -fx-background-radius: 8;
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: transparent;
+    -fx-padding: 8 12;
+    -fx-pref-height: 34;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2563eb;
+    -fx-border-width: 1;
+}
+.check-box {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 12px;
+}
+.button {
+    -fx-background-radius: 8;
+    -fx-font-weight: 600;
+    -fx-padding: 8 16;
+}
+
+.button:default {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-opacity: 0.95;
+    -fx-cursor: hand;
+}
+.error {
+    -fx-text-fill: #dc2626;
+    -fx-font-size: 12px;
+}
+.success {
+    -fx-text-fill: #16a34a; 
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}

@@ -1,0 +1,167 @@
+.app-bg {
+    -fx-background-color: linear-gradient(to bottom, #2F7CF8, #1E5ED6);
+}
+/* ===== BASE / FUNDO ===== */
+.root {
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+    -fx-font-size: 13px;
+    -fx-background-color: linear-gradient(to bottom, #e5edff, #f4f6fb);
+}
+
+/* ===== LAYOUT PRINCIPAL (BorderPane) ===== */
+.main-border {
+    -fx-background-color: transparent;
+    -fx-padding: 24 32 24 32;
+    
+}
+
+/* ===== TOPO (PerFin + Notificação / Conta) ===== */
+.top-bar {
+    -fx-padding: 0 8 16 8;
+}
+
+.app-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #111827;
+}
+
+.top-link {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 12px;
+}
+.top-link:hover {
+    -fx-text-fill: #2563eb;
+}
+
+/* ===== MENU LATERAL ===== */
+.menu-card {
+    -fx-background-color: rgba(255,255,255,0.88);
+    -fx-background-radius: 16;
+    -fx-padding: 14;
+    -fx-border-color: #E7ECF3;
+    -fx-border-radius: 16;
+}
+.menu-section {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B7280;
+    -fx-font-weight: bold;
+}
+.btn-ghost {
+    -fx-background-radius: 12;
+    -fx-background-color: white;
+    -fx-border-color: #E7ECF3;
+    -fx-border-radius: 12;
+    -fx-text-fill: #1F2937;
+    -fx-padding: 10 14;
+}
+.btn-ghost:hover { -fx-background-color: #F8FAFC; }
+
+.btn-primary {
+    -fx-background-radius: 12;
+    -fx-background-color: #2F7CF8;
+    -fx-text-fill: white;
+    -fx-padding: 12 16;
+}
+.btn-primary:hover { -fx-background-color: #1E5ED6; }
+
+.btn-soft-dark {
+    -fx-background-radius: 12;
+    -fx-background-color: #EEF4FF;
+    -fx-text-fill: #1F2937;
+    -fx-padding: 8 14;
+    -fx-border-color: #E5EAF1;
+}
+.btn-soft-dark:hover { -fx-background-color: #E7EEFF; }
+
+
+/* ===== CARD CENTRAL (REGISTRAR TRANSAÇÃO) ===== */
+.content-card {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-padding: 24 32 32 32;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.10), 18, 0, 0, 6);
+}
+
+/* Título do card */
+.form-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #111827;
+}
+.form-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Labels à esquerda (Tipo, Descrição, etc.) */
+.form-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #374151;
+}
+
+/* ===== CAMPOS (ComboBox, TextField, DatePicker) ===== */
+.text-field,
+.combo-box,
+.date-picker {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8;
+    -fx-padding: 8 12;
+    -fx-pref-height: 34;
+}
+
+.text-field:focused,
+.combo-box:focused,
+.date-picker:focused {
+    -fx-background-color: white;
+    -fx-border-color: #2563eb;
+    -fx-border-width: 1.1;
+}
+
+/* DatePicker setinha */
+.date-picker .arrow-button {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 0 8 8 0;
+}
+.date-picker .arrow-button:hover {
+    -fx-background-color: #d1d5db;
+}
+
+/* ===== BOTÕES ===== */
+.button {
+    -fx-background-radius: 8;
+    -fx-font-weight: 600;
+    -fx-padding: 8 18;
+}
+
+/* Cadastrar (à direita do form) */
+.btn-primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+.btn-primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+/* Cancelar (à esquerda) */
+.btn-secondary {
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #374151;
+}
+.btn-secondary:hover {
+    -fx-background-color: #d1d5db;
+}
+
+/* Botão Sair (menu lateral embaixo) */
+.btn-exit {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-background-radius: 999;
+}
+.btn-exit:hover {
+    -fx-background-color: #dc2626;
+}

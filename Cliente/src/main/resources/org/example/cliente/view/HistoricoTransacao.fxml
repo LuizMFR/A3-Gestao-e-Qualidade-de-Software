@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@Stylesheet.css" type="BorderPane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testea3.HistoricoTransacoesController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@Stylesheet.css"  xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cliente.controllers.HistoricoTransacoesController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -153,7 +153,7 @@
             </HBox>
             <VBox prefHeight="503.0" prefWidth="910.0">
                <children>
-                  <GridPane alignment="CENTER" prefHeight="505.0" prefWidth="910.0" style="-fx-background-color: white;" stylesheets="@Stylesheet.css">
+                  <GridPane fx:id="gridTransacoes" alignment="CENTER" prefHeight="505.0" prefWidth="910.0" style="-fx-background-color: white;" stylesheets="@Stylesheet.css">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="179.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="185.0" />
@@ -303,4 +303,4 @@
          </children>
       </VBox>
    </center>
-</fx:root>
+</BorderPane>

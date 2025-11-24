@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 
 import org.example.cliente.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CadastroController {
 
@@ -22,6 +23,7 @@ public class CadastroController {
     @FXML private Button btnCancelar;
     @FXML private Label lblErro;
 
+    @Autowired
     private UserService userService = new UserService();
 
     private static final Pattern EMAIL_REGEX =
@@ -99,8 +101,13 @@ public class CadastroController {
             lblMensagem.getStyleClass().add("success");
         lblMensagem.setText("Conta criada com sucesso!");
 
-        userService.criarConta(nome, sobrenome, email, senha, profissao, nascimento);
-        Cancelar();
+        if(userService.criarConta(nome, sobrenome, email, senha, profissao, nascimento)){
+            Cancelar();
+        } else {
+            setLblErro("Não foi possível criar a conta.");
+            erro("");
+            Cancelar();
+        }
     }
 
     public void setLblErro(String msg) {

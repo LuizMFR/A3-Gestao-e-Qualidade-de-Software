@@ -284,14 +284,21 @@ private void tabelaAtualizarUI() {
             PerfilController perfilController = loader.getController();
             perfilController.setUserLoggedIn(userLoggedIn);
             
+            perfilController.setOnUserUpdated(user -> {
+                this.userLoggedIn = user;
+                setUserLoggedIn(user);
+            });
+
             javafx.stage.Stage stage = new javafx.stage.Stage();
-            stage.setTitle("Categorias");
+            stage.setTitle("Perfil");
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
+            
+            userLoggedIn = perfilController.userLoggedIn;
 
             }catch (Exception e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
+                new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Perfil.").showAndWait();//teste
             }
     }
 

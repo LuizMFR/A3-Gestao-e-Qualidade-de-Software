@@ -86,6 +86,7 @@ public class UserRepository {
             int status = con.getResponseCode();
             if (status != 200 && status != 201) {
                 System.out.println("Erro ao cadastrar usuário: " + status);
+                return false;
             }
 
             con.disconnect();
@@ -93,6 +94,38 @@ public class UserRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public User updateUser(User user) {
+        try {
+            String reqString = BASE_URL + "/" + user.getId();
+
+            URL url = URI.create(reqString).toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
+            con.setDoOutput(true);
+
+
+            String jsonInputString = mapper.writeValueAsString(user);
+
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            int status = con.getResponseCode();
+            if (status != 200 && status != 201) {
+                System.out.println("Erro ao cadastrar usuário: " + status);
+                return null;
+            }
+
+            con.disconnect();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

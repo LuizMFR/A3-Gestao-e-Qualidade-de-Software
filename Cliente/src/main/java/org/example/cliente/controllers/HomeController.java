@@ -217,16 +217,31 @@ private void tabelaAtualizarUI() {
 
     @FXML
     private void navTransacoes(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/cliente/view/transacao.fxml"));
         try {
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Transações");
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                getClass().getResource("/org/example/cliente/view/HistoricoTransacao.fxml"  )
+            );
+            URL fxmlURL = getClass().getResource("/org/example/cliente/view/HistoricoTransacao.fxml");
+            System.out.println("Debug -> " + fxmlURL);
+            Parent root = null;
+            
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            HistoricoTransacoesController historicoTransacoesController = loader.getController();
+           // historicoTransacoesController.setUserLoggedIn(userLoggedIn);
+            
+            javafx.stage.Stage stage = new javafx.stage.Stage();
+            stage.setTitle("Categorias");
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
-        } catch (IOException e) {
+
+        }catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Transações.").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
         }
     }
 
@@ -284,19 +299,26 @@ private void tabelaAtualizarUI() {
             PerfilController perfilController = loader.getController();
             perfilController.setUserLoggedIn(userLoggedIn);
             
+            perfilController.setOnUserUpdated(user -> {
+                this.userLoggedIn = user;
+                setUserLoggedIn(user);
+            });
+
             javafx.stage.Stage stage = new javafx.stage.Stage();
-            stage.setTitle("Categorias");
+            stage.setTitle("Perfil");
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
+            
+            userLoggedIn = perfilController.userLoggedIn;
 
             }catch (Exception e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
+                new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Perfil.").showAndWait();//teste
             }
     }
 
     // Botões principais
-   @FXML
+    @FXML
     private void novaTransacao(ActionEvent event) {
         
     carregarTransacoes(); // garante que categorias estão carregadas

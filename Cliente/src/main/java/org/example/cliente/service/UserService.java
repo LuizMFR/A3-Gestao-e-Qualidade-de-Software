@@ -16,7 +16,7 @@ public class UserService {
     
     public boolean validarCredenciais(String gmail, String password) {
 
-        User user  = userRepository .validarCredenciais(gmail, password);
+        User user  = userRepository.validarCredenciais(gmail, password);
        
         if (user != null) {
             loggedInUser = user;
@@ -31,7 +31,7 @@ public class UserService {
         return loggedInUser;
     }
 
-    public void criarConta(String nome, String sobrenome, String email, String senha, String profissao, LocalDate nascimento) {
+    public boolean criarConta(String nome, String sobrenome, String email, String senha, String profissao, LocalDate nascimento) {
         
         System.out.println("Nome: " + nome + " " + sobrenome);
         System.out.println("Email: " + email);
@@ -40,9 +40,16 @@ public class UserService {
         User user = new User(nome, sobrenome, email, senha, profissao, nascimento);
         if(userRepository.cadastrarUsuario(user)){
             System.out.println("Usuário cadastrado com sucesso.");
+            return true;
         } else {
             System.out.println("Falha ao cadastrar o usuário.");
+            return false;
         }
     }
 
+    public User updateUser(Integer id,User user) {
+        return userRepository.updateUser(id,user);
+    }
+
+   
 }

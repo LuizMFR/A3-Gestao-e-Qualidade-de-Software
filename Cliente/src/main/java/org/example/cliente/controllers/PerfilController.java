@@ -12,15 +12,24 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.util.function.Consumer;
 
+import org.example.cliente.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.example.cliente.entities.User;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 public class PerfilController {
 
-    private User userLoggedIn;
+    @Autowired
+    private UserService userService = new UserService();
+    
+    private static final Pattern EMAIL_REGEX =
+            Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+
+    public User userLoggedIn;
 
     @FXML
     private void initialize() {
@@ -55,6 +64,13 @@ public class PerfilController {
             datepickerNascimento.setValue(user.getNascimento());
         }
     }
+
+    private Consumer<User> onUserUpdated;
+
+    public void setOnUserUpdated(Consumer<User> callback) {
+        this.onUserUpdated = callback;
+    }
+
     // Método chamado quando o botão "Salvar Alterações" é pressionado
     @FXML
     public void salvarPerfil(ActionEvent event) {
@@ -63,19 +79,99 @@ public class PerfilController {
         String email = textfieldEmail.getText();
         String profissao = textfieldProfissao.getText();
         String senha = passwordfieldSenha.getText();
-        LocalDate nascimento = datepickerNascimento.getValue();
+        LocalDate nascimento = datepickerNascimento.getValue().plusDays(1);
 
-        if (nome.isEmpty() || sobrenome.isEmpty() || email.isEmpty()) {
-            mostrarAlerta("Campos obrigatórios", "Nome, Sobrenome e Email são obrigatórios.");
+        System.out.println(userLoggedIn.getNascimento().toString());
+        System.out.println(nascimento.toString());
+
+        if (nome.isEmpty()) {
+            mostrarAlerta("Erro de Validação", "O campo Nome não pode estar vazio.");
+            return;
+        }
+        if (sobrenome.isEmpty()) {
+            mostrarAlerta("Erro de Validação", "O campo Sobrenome não pode estar vazio.");
+            return;
+        }
+        if (email.isEmpty()) {
+            mostrarAlerta("Erro de Validação", "O campo Email não pode estar vazio.");
+            return;
+        }
+        if (profissao.isEmpty()) {
+            mostrarAlerta("Erro de Validação", "O campo Profissão não pode estar vazio.");
+            return;
+        }
+        if (senha.isEmpty()) {
+            mostrarAlerta("Erro de Validação", "O campo Senha não pode estar vazio.");
+            return;
+        }
+        if (nascimento == null) {
+            mostrarAlerta("Erro de Validação", "O campo Nascimento não pode estar vazio.");
             return;
         }
 
-        // Aqui entraria a lógica de salvar esses dados em banco
+        if (!EMAIL_REGEX.matcher(email).matches()) {
+            mostrarAlerta("Erro de Validação", "O formato do Email é inválido.");
+            return;
+        }
+
+        if (senha.length() < 6) {
+            mostrarAlerta("Erro de Validação", "A senha deve ter pelo menos 6 caracteres.");
+            return;
+        }
+
+        if (nascimento.isAfter(LocalDate.now())) {
+            mostrarAlerta("Erro de Validação", "A data de nascimento não pode ser no futuro.");
+            return;
+        }
+
+        if (userLoggedIn == null) {
+            mostrarAlerta("Erro", "Nenhum usuário está logado.");
+            return;
+        }
+
+        if (nome.equals(userLoggedIn.getNome()) &&
+            sobrenome.equals(userLoggedIn.getSobrenome()) &&
+            email.equals(userLoggedIn.getEmail()) &&
+            profissao.equals(userLoggedIn.getProfissao()) &&
+            senha.equals(userLoggedIn.getSenha()) &&
+            nascimento.equals(userLoggedIn.getNascimento().plusDays(1))) {
+            mostrarAlerta("Nenhuma Alteração", "Nenhum dado foi alterado.");
+            return;
+        }
+
+        User updatedUser = new User(
+            nome,
+            sobrenome,
+            email,
+            senha,
+            profissao,
+            nascimento
+        );
+
+        try{
+            updatedUser = userService.updateUser(userLoggedIn.getId(),updatedUser);
+        }catch(Exception e) {
+            mostrarAlerta("Erro", "Não foi possível atualizar o perfil: " 
+            + e.getMessage());
+            
+        }
+
+        if(updatedUser != null){
+            userLoggedIn = updatedUser;
+        } else {
+            mostrarAlerta("Erro", "Não foi possível atualizar o perfil.");
+            return;
+        }
+
+        if (onUserUpdated != null) {
+            onUserUpdated.accept(updatedUser);
+        }
 
         mostrarAlerta("Perfil Atualizado", "As alterações foram salvas com sucesso!");
+        setUserLoggedIn(updatedUser);
     }
 
-    // Botão Sair-> volta para Home (home.fxml)
+
     @FXML
     private void sair(ActionEvent event) {
         try {
@@ -97,5 +193,7 @@ public class PerfilController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
+
+    
 }
 

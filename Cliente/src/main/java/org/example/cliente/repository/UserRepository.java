@@ -86,6 +86,7 @@ public class UserRepository {
             int status = con.getResponseCode();
             if (status != 200 && status != 201) {
                 System.out.println("Erro ao cadastrar usuário: " + status);
+                return false;
             }
 
             con.disconnect();
@@ -93,6 +94,55 @@ public class UserRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public User updateUser(Integer id, User user) {
+        try {
+            String reqString = BASE_URL + "/" + id;
+
+            System.out.println("Requisição URL: " + reqString);
+            URL url = URI.create(reqString).toURL();
+            System.out.println("URL criada: " + url.toString());
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
+            con.setDoOutput(true);
+
+
+            String jsonInputString = mapper.writeValueAsString(user);
+            System.out.println("JSON Enviado: " + jsonInputString);
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
+
+            int status = con.getResponseCode();
+            if (status != 200 && status != 201) {
+                System.out.println("Erro ao cadastrar usuário: " + status);
+                return null;
+            }
+
+            StringBuilder response = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()))) {
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+            String json = response.toString();
+
+            System.out.println("Resposta recebida: " + json);
+
+            
+
+            con.disconnect();
+            return mapper.readValue(json, User.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

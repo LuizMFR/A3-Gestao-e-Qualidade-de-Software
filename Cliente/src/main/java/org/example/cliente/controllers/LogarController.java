@@ -26,9 +26,10 @@ public class LogarController {
     @Autowired
     UserService userService;
 
-
+    
     @FXML
     private void initialize() {
+        lblMensagem.setText("");
         // Foco inicial no email
         txtEmail.requestFocus();
         // Limpa mensagem ao digitar

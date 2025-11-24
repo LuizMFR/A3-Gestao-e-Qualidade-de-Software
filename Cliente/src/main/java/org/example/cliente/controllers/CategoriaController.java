@@ -58,7 +58,7 @@ public class CategoriaController {
 
     @FXML
     public void initialize() {
-         comboTipo.getItems().addAll("Entrada", "Saída");
+         comboTipo.getItems().addAll("Receita", "Custo");
     }
 
     public void setUserLoggedIn(User user) {
@@ -95,7 +95,7 @@ public class CategoriaController {
         
 
         String titulo = textfieldDesc.getText().trim();
-        String tipo = comboTipo.getValue();
+        String tipo = comboTipo.getValue().toLowerCase();
 
         if (titulo.isEmpty()) {
             mostrarAlerta("Validação", "Informe o título da categoria.");
@@ -109,7 +109,6 @@ public class CategoriaController {
         tableCategorias.refresh();
 
         textfieldDesc.clear();
-        textfieldType.clear();
     }
 
     //Botão "Sair" -> voltar para Home

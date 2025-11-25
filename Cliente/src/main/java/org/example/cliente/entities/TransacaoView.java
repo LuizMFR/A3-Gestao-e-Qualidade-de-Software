@@ -18,8 +18,8 @@ public class TransacaoView {
     }
 
     //Iniciando o contrutor completo
-    public TransacaoView(int usuarioId, String categoriaDesc, String descricao, LocalDate dataTransacao, Double valor, String tipo){
-
+    public TransacaoView(int id, int usuarioId, String categoriaDesc, String descricao, LocalDate dataTransacao, Double valor, String tipo){
+        this.id = id;
         this.usuarioId = usuarioId;
         this.descricao = descricao;
         this.categoriaDesc = categoriaDesc;

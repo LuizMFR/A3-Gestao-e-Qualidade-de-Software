@@ -93,10 +93,11 @@
                                     <TableView fx:id="tblTransacoes" prefHeight="280">
                                         <columns>
                                             <TableColumn fx:id="colData" prefWidth="120" text="Data" />
-                                            <TableColumn fx:id="colDescricao" prefWidth="260" text="Descrição" />
+                                            <TableColumn fx:id="colDescricao" prefWidth="200" text="Descrição" />
                                             <TableColumn fx:id="colCategoria" prefWidth="160" text="Categoria" />
                                             <TableColumn fx:id="colTipo" prefWidth="100" text="Tipo" />
-                                            <TableColumn fx:id="colValor" prefWidth="191.20013427734375" text="Valor" />
+                                            <TableColumn fx:id="colValor" prefWidth="120.20013427734375" text="Valor" />
+                                            <TableColumn fx:id="tablecolAcoes" prefWidth="100" text="Ações" />
                                         </columns>
                                     </TableView>
                                     <HBox alignment="CENTER_RIGHT" spacing="8">

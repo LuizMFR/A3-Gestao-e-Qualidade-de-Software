@@ -48,7 +48,6 @@
                         <VBox spacing="8" styleClass="menu-card">
                             <Label styleClass="menu-section" text="Navegação" />
                             <Button onAction="#navDashboard" styleClass="btn-ghost" text="Dashboard" />
-                            <Button onAction="#navTransacoes" styleClass="btn-ghost" text="Transações" />
                             <Button onAction="#navCategorias" styleClass="btn-ghost" text="Categorias" />
                             <Button onAction="#navRelatorios" styleClass="btn-ghost" text="Relatórios" />
                             <Button onAction="#navPerfil" styleClass="btn-ghost" text="Perfil" />

@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -116,6 +117,8 @@ public class HomeController {
         });
 
         tblTransacoes.setItems(listaTransacoes);
+
+        //função configurar botão exclusão
     }
 
     private void carregarTransacoes() {
@@ -326,6 +329,7 @@ private void tabelaAtualizarUI() {
     atualizaCategorias();
 
     Dialog<Transacao> dialog = new Dialog<>();
+    dialog.initStyle(StageStyle.DECORATED);
     dialog.setTitle("Nova Transação");
     dialog.setHeaderText("Preencha os dados da nova transação");
     dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);

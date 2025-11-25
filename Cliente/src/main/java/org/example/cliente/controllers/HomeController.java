@@ -298,35 +298,6 @@ private void tabelaAtualizarUI() {
         System.out.println("Ir para Dashboard...");
     }
 
-    @FXML
-    private void navTransacoes(ActionEvent event) {
-        try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
-                getClass().getResource("/org/example/cliente/view/HistoricoTransacao.fxml"  )
-            );
-            URL fxmlURL = getClass().getResource("/org/example/cliente/view/HistoricoTransacao.fxml");
-            System.out.println("Debug -> " + fxmlURL);
-            Parent root = null;
-            
-            try {
-                root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            HistoricoTransacoesController historicoTransacoesController = loader.getController();
-           // historicoTransacoesController.setUserLoggedIn(userLoggedIn);
-            
-            javafx.stage.Stage stage = new javafx.stage.Stage();
-            stage.setTitle("Categorias");
-            stage.setScene(new javafx.scene.Scene(root));
-            stage.show();
-
-        }catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Não foi possível abrir a tela de Categorias.").showAndWait();//teste
-        }
-    }
 
     @FXML
     private void navCategorias(ActionEvent event) {

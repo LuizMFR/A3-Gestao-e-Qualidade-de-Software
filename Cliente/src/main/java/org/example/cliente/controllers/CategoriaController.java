@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import org.example.cliente.entities.Categoria;
+import org.example.cliente.entities.Transacao;
 import org.example.cliente.entities.User;
 import org.example.cliente.service.CategoriaService;
 import org.example.cliente.service.HomeService;
@@ -160,6 +161,18 @@ public class CategoriaController {
     }
 
     private void removerCategoria(Categoria categoria) {
+
+        List<Transacao> listCategoriasComTransacao = this.homeService.getAllTransacoes(this.userLoggedIn.getId());
+
+        if (!listCategoriasComTransacao.isEmpty()){
+            for (Transacao t : listCategoriasComTransacao){
+                if (t.getCategoriaId() == categoria.getId()){
+                    mostrarAlerta("Atenção", "Não é possível excluir a categoria \"" + categoria.getDescricao() + "\" pois existem transações associadas a ela.");
+                    return;
+                }
+            }
+        }
+
         Alert confirm = new Alert(
                 Alert.AlertType.CONFIRMATION,
                 "Deseja realmente excluir a categoria \"" + categoria.getDescricao() + "\"?",

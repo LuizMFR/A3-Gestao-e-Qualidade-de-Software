@@ -122,4 +122,24 @@ public class HomeRepository {
             e.printStackTrace();
         }
     }
+
+    public void deleteTransacao(Integer transacaoId){
+        try {
+            String requestUrl = "http://localhost:8080/transacoes" + "/" + transacaoId;
+
+            URL url = URI.create(requestUrl).toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("DELETE");
+
+            int status = con.getResponseCode();
+            if (status != 200 && status != 204) {
+                System.out.println("Erro DELETE transação: " + status);
+            }
+
+            con.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

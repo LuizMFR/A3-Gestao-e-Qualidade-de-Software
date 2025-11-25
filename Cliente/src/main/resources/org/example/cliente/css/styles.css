@@ -132,3 +132,7 @@
 .table-row-cell:filled:selected, .table-cell:filled:selected {
     -fx-background-color: rgba(47,124,248,0.15);
 }
+
+.dialog-pane{
+    background-color: #111827;
+}

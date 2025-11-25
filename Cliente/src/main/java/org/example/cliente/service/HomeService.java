@@ -46,4 +46,8 @@ public class HomeService {
     public void salvarTransacao(Transacao transacao) {
         homeRepository.saveTransacao(transacao);
     }
+
+    public void deleteTransacao(Integer transacaoId){
+        homeRepository.deleteTransacao(transacaoId);
+    }
 }

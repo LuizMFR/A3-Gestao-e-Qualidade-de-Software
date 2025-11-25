@@ -11,6 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.io.IOException;
 
@@ -21,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javafx.util.Callback;
 import org.example.cliente.entities.Transacao;
 import org.example.cliente.entities.TransacaoView;
 import org.example.cliente.service.HomeService;
@@ -65,6 +69,9 @@ public class HomeController {
 
     @FXML
     private Button btnTransacao;
+
+    @FXML
+    private TableColumn<TransacaoView, Void> tablecolAcoes;
 
     private final ObservableList<TransacaoView> listaTransacoes = FXCollections.observableArrayList();
     private final ObservableList<Categoria> listaCategorias = FXCollections.observableArrayList();
@@ -116,6 +123,81 @@ public class HomeController {
         });
 
         tblTransacoes.setItems(listaTransacoes);
+        configurarColunaAcoes();
+    }
+
+    //Configura a coluna Ações com botão "Excluir"
+    private void configurarColunaAcoes() {
+        Callback<TableColumn<TransacaoView, Void>, TableCell<TransacaoView, Void>> cellFactory =
+                new Callback<>() {
+                    @Override
+                    public TableCell<TransacaoView, Void> call(TableColumn<TransacaoView, Void> param) {
+                        return new TableCell<>() {
+
+                            private final Button btnExcluir = new Button("Excluir");
+
+                            {
+                                btnExcluir.getStyleClass().add("btn-danger");
+                                btnExcluir.setOnAction(event -> {
+                                    TransacaoView transacao = getTableView().getItems().get(getIndex());
+                                    removerTransacao(transacao);
+                                });
+                            }
+
+                            @Override
+                            protected void updateItem(Void item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                } else {
+                                    setGraphic(btnExcluir);
+                                }
+                            }
+                        };
+                    }
+                };
+
+        tablecolAcoes.setCellFactory(cellFactory);
+    }
+
+    private void removerTransacao(TransacaoView transacao) {
+        Alert confirm = new Alert(
+                Alert.AlertType.CONFIRMATION,
+                "Deseja realmente excluir a transacao \"" + transacao.getDescricao() + "\"?",
+                ButtonType.YES,
+                ButtonType.NO
+        );
+        confirm.setTitle("Confirmar exclusão");
+        confirm.setHeaderText(null);
+        System.out.println("o id da transacao e" + transacao.getId());
+        deleteTransacao(transacao.getId());
+        Optional<ButtonType> result = confirm.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+
+            listaTransacoes.remove(transacao);
+            tblTransacoes.refresh();
+        }
+    }
+
+    public void deleteTransacao(int transacaoId) {
+        try {
+            String requestUrl = "http://localhost:8080/transacoes" + "/" + transacaoId;
+
+            URL url = URI.create(requestUrl).toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("DELETE");
+
+            int status = con.getResponseCode();
+            if (status != 200 && status != 204) {
+                System.out.println("Erro DELETE transação: " + status);
+            }
+
+            con.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void carregarTransacoes() {
@@ -168,6 +250,7 @@ public class HomeController {
 
             // monta a TransacaoView na ordem: id, descricao, categoriaDescricao, tipo, valor, data
             TransacaoView view = new TransacaoView(
+                    t.getId(),
                     t.getId(),
                     descCategoria,
                     t.getDescricao(),
@@ -329,7 +412,7 @@ private void tabelaAtualizarUI() {
     dialog.setTitle("Nova Transação");
     dialog.setHeaderText("Preencha os dados da nova transação");
     dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-    
+
     
     DatePicker dpData = new DatePicker();
     TextField txtDescricao = new TextField();

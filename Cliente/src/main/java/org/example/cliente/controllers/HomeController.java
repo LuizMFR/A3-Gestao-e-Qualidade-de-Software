@@ -34,6 +34,8 @@ import org.example.cliente.entities.User;
 import org.example.cliente.entities.Categoria;
 import org.example.cliente.controllers.CategoriaController;
 import org.example.cliente.controllers.PerfilController;
+import java.lang.Integer;
+import java.text.DecimalFormat;
 
 public class HomeController {
 
@@ -114,7 +116,6 @@ public class HomeController {
             @Override
             protected void updateItem(LocalDate data, boolean empty) {
                 super.updateItem(data, empty);
-            
                 if (empty || data == null) {
                     setText(null);
                 } else {
@@ -122,6 +123,21 @@ public class HomeController {
                 }
             }
         });
+
+        colValor.setCellFactory(column -> new TableCell<TransacaoView, Double>() {
+            private final DecimalFormat df = new DecimalFormat("#,##0.00");
+
+            @Override
+            protected void updateItem(Double valor, boolean empty) {
+                super.updateItem(valor, empty);
+
+                if (empty || valor == null) {
+                    setText(null);
+                } else {
+                    setText("R$ " + df.format(valor));
+                }
+              }
+             });
 
         tblTransacoes.setItems(listaTransacoes);
         configurarColunaAcoes();
@@ -181,24 +197,7 @@ public class HomeController {
     }
 
     public void deleteTransacao(int transacaoId) {
-        try {
-            String requestUrl = "http://localhost:8080/transacoes" + "/" + transacaoId;
-
-            URL url = URI.create(requestUrl).toURL();
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("DELETE");
-
-            int status = con.getResponseCode();
-            if (status != 200 && status != 204) {
-                System.out.println("Erro DELETE transação: " + status);
-            }
-
-            con.disconnect();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        homeService.deleteTransacao(transacaoId);
     }
 
     private void carregarTransacoes() {
@@ -257,7 +256,7 @@ public class HomeController {
                     t.getDescricao(),
                     t.getDataTransacao(),
                     t.getValor(),
-                    t.getTipo()
+                    t.getTipo().strip().substring(0,1).toUpperCase() + t.getTipo().strip().substring(1).toLowerCase()
             );
 
             listaTransacoes.add(view);

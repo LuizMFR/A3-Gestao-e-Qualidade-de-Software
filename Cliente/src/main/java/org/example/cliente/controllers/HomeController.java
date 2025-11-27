@@ -193,6 +193,7 @@ public class HomeController {
 
             listaTransacoes.remove(transacao);
             tblTransacoes.refresh();
+            atualizarResumo();
         }
     }
 

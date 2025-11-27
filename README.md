@@ -4,12 +4,15 @@ Gestoe de finanças pessoais fácil e intuitivo para o controle de suas finança
 Projeto realizado de conclusão da UC Gestão e Qualidade de Spftware 
 
   Instruções para rodar o servidor:
+    
+    Antes de rodar o servidor deve ser alterado as variáveis relativas ao servidor no application.properties (User e senha da conexão)
     Execute o arquivo ServidorApplication.java que está localizado em:
-      Servidor/src/main/java/com/example/Servidor/ServidorApplication.java
+    Servidor/src/main/java/com/example/Servidor/ServidorApplication.java
 
 
 
 Instruções para rodar parte do cliente: 
+
   Necessário ter java 25 instalado e configurado no windows: 
   Adicione ao path da variávelde ambiente a pasta bin do maven, e também a pasta do java 
   Abra o projeto em sua IDE de preferência (recomendamos o VSCode)
